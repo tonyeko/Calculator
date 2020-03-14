@@ -2,6 +2,7 @@
 #define CALCULATOR_H
 
 #include <QMainWindow>
+#include "Expression/Expression.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Calculator; }

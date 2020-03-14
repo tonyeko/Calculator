@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
+    <width>500</width>
     <height>499</height>
    </rect>
   </property>
@@ -18,10 +18,22 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
-      <width>486</width>
-      <height>81</height>
+      <y>10</y>
+      <width>481</width>
+      <height>71</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	qproperty-alignment: 'AlignVCenter | AlignRight';
+	border: 3px solid transparent;
+	background-color: white;
+}</string>
     </property>
     <property name="text">
      <string>0</string>
