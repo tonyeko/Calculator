@@ -6,6 +6,7 @@
 #include "SinExpression.hpp"
 #include "CosExpression.hpp"
 #include "TanExpression.hpp"
+#include "Memory.hpp"
 #include <iostream>
 using namespace std;
 
@@ -17,6 +18,12 @@ int main() {
     Expression* e5 = new SinExpression(new TerminalExpression(2.45));
     Expression* e6 = new CosExpression(new TerminalExpression(2.45));
     Expression* e7 = new TanExpression(new TerminalExpression(2.45));
+    Memory m;
+    m.MC(e1); m.MC(e2); m.MC(e3); m.MC(e4); m.MC(e5); m.MC(e6);
+    m.clear();
+    m.MC(new TerminalExpression(1004));
+    Expression* test = m.MR(); 
+    cout << test->solve() << endl;
     cout << e1->solve() << endl;
     cout << e2->solve() << endl;
     cout << e3->solve() << endl;
