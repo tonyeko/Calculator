@@ -1,3 +1,6 @@
+#ifndef NEGATIVE_EXPRESSION_HPP_
+#define NEGATIVE_EXPRESSION_HPP_
+
 #include "UnaryExpression.hpp"
 
 class NegativeExpression : public UnaryExpression {
@@ -6,3 +9,4 @@ class NegativeExpression : public UnaryExpression {
 		double solve();
 };
 
+#endif

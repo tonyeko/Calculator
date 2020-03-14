@@ -4,6 +4,7 @@
 class Expression {
 public:
     Expression() {}
+    virtual ~Expression() {}
     virtual double solve() = 0;
 };
 

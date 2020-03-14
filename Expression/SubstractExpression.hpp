@@ -1,3 +1,6 @@
+#ifndef SUBSTRACT_EXPRESSION_HPP_
+#define SUBSTRACT_EXPRESSION_HPP_
+
 #include "BinaryExpression.hpp"
 
 class SubstractExpression : public BinaryExpression {
@@ -6,3 +9,4 @@ class SubstractExpression : public BinaryExpression {
 		double solve();
 };
 
+#endif
