@@ -15,8 +15,13 @@ class Calculator : public QMainWindow
 public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
+    Expression* expr;
 
 private:
     Ui::Calculator *ui;
+
+private slots:
+    void number_pressed();
+    void on_decimalButton_released();
 };
 #endif // CALCULATOR_H

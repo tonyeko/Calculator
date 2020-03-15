@@ -16,10 +16,43 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Expression/AddExpression.cpp \
+    Expression/BinaryExpression.cpp \
+    Expression/CosExpression.cpp \
+    Expression/DivisionExpression.cpp \
+    Expression/Memory.cpp \
+    Expression/MultiplicationExpression.cpp \
+    Expression/NegativeExpression.cpp \
+    Expression/PercentExpression.cpp \
+    Expression/SinExpression.cpp \
+    Expression/SqrtExpression.cpp \
+    Expression/SquareExpression.cpp \
+    Expression/SubstractExpression.cpp \
+    Expression/TanExpression.cpp \
+    Expression/TerminalExpression.cpp \
+    Expression/TrigonometryExpression.cpp \
+    Expression/UnaryExpression.cpp \
     main.cpp \
     calculator.cpp
 
 HEADERS += \
+    Expression/AddExpression.hpp \
+    Expression/BinaryExpression.hpp \
+    Expression/CosExpression.hpp \
+    Expression/DivisionExpression.hpp \
+    Expression/Expression.hpp \
+    Expression/Memory.hpp \
+    Expression/MultiplicationExpression.hpp \
+    Expression/NegativeExpression.hpp \
+    Expression/PercentExpression.hpp \
+    Expression/SinExpression.hpp \
+    Expression/SqrtExpression.hpp \
+    Expression/SquareExpression.hpp \
+    Expression/SubstractExpression.hpp \
+    Expression/TanExpression.hpp \
+    Expression/TerminalExpression.hpp \
+    Expression/TrigonometryExpression.hpp \
+    Expression/UnaryExpression.hpp \
     calculator.h
 
 FORMS += \
@@ -29,3 +62,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    Expression/main.exe
