@@ -110,6 +110,17 @@ void Calculator::unaryOperation_pressed()
 
 void Calculator::binaryOperation_pressed()
 {
+	QPushButton* button = (QPushButton*) sender();
+    setExpr((expr->solve() + button->text()));
+    update_display();
+//    if (button->text() == "+") {
+//    	expr = new AddExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
+//    } else if (button->text() == "-") {
+//    	expr = new SubstractExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
+//	  } else if (button->text() == "x") {
+//    	expr = new MultiplicationExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
+//	  } else if (button->text() == "/") {
+//    	expr = new DivisionExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
 
 }
 

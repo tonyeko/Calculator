@@ -13,7 +13,7 @@ public:
     		this->x = x;
     		this->y = y;
 	}
-	~BinaryExpression() {
+	virtual ~BinaryExpression() {
     		delete x;
     		delete y;
 	}
