@@ -6,7 +6,7 @@ class Expression {
 public:
     Expression() {}
     virtual ~Expression() {}
-    virtual T solve();
+    virtual T solve() = 0;
 };
 
 #endif

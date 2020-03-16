@@ -16,22 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Expression/AddExpression.cpp \
-    Expression/BinaryExpression.cpp \
-    Expression/CosExpression.cpp \
-    Expression/DivisionExpression.cpp \
-    Expression/Memory.cpp \
-    Expression/MultiplicationExpression.cpp \
-    Expression/NegativeExpression.cpp \
-    Expression/PercentExpression.cpp \
-    Expression/SinExpression.cpp \
-    Expression/SqrtExpression.cpp \
-    Expression/SquareExpression.cpp \
-    Expression/SubstractExpression.cpp \
-    Expression/TanExpression.cpp \
-    Expression/TerminalExpression.cpp \
-    Expression/TrigonometryExpression.cpp \
-    Expression/UnaryExpression.cpp \
     main.cpp \
     calculator.cpp
 

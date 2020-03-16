@@ -16,7 +16,8 @@ public:
 	~BinaryExpression() {
     		delete x;
     		delete y;
-		}
+	}
+	virtual T solve() = 0;
 };
 
 #endif

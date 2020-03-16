@@ -2,6 +2,7 @@
 #define CALCULATOR_H
 
 #include <QMainWindow>
+#include <string>
 #include "Expression/Expression.hpp"
 #include "Expression/Memory.hpp"
 
@@ -20,8 +21,8 @@ public:
 
 private:
     Ui::Calculator *ui;
-    Expression* expr;
-    Memory mem;
+    Expression<double>* expr;
+    Memory<double> mem;
     double ans;
 
 private slots:

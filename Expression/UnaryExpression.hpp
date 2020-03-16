@@ -14,7 +14,7 @@ public:
 	virtual ~UnaryExpression() {
     delete x;
 	}
-    virtual T solve();
+    virtual T solve() = 0;
 };
 
 #endif

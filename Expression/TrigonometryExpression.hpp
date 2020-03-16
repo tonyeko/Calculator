@@ -7,7 +7,7 @@ template<class T>
 class TrigonometryExpression : public UnaryExpression<T> {
 	public:
 		TrigonometryExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
-		virtual T solve();
+		virtual T solve() = 0;
 };
 
 #endif

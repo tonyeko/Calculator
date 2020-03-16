@@ -11,19 +11,19 @@
 using namespace std;
 
 int main() {
-    Expression* e1 = new SquareExpression(new TerminalExpression(5));
-    e1 = new SinExpression(new TerminalExpression(5));
-    Expression* e2 = new AddExpression(new TerminalExpression(5.99123), new TerminalExpression(6.91283));
-    Expression* e3 = new SubstractExpression(new TerminalExpression(5.99123), new TerminalExpression(6.91283));
-    Expression* e4 = new PercentExpression(new TerminalExpression(5));
-    Expression* e5 = new SinExpression(new TerminalExpression(2.45));
-    Expression* e6 = new CosExpression(new TerminalExpression(2.45));
-    Expression* e7 = new TanExpression(new TerminalExpression(2.45));
-    Memory m;
+    Expression<double>* e1 = new SquareExpression<double>(new TerminalExpression<double>(5));
+    e1 = new SinExpression<double>(new TerminalExpression<double>(5));
+    Expression<double>* e2 = new AddExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.91283));
+    Expression<double>* e3 = new SubstractExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.91283));
+    Expression<double>* e4 = new PercentExpression<double>(new TerminalExpression<double>(5));
+    Expression<double>* e5 = new SinExpression<double>(new TerminalExpression<double>(2.45));
+    Expression<double>* e6 = new CosExpression<double>(new TerminalExpression<double>(2.45));
+    Expression<double>* e7 = new TanExpression<double>(new TerminalExpression<double>(2.45));
+    Memory<double> m;
     m.MC(e1); m.MC(e2); m.MC(e3); m.MC(e4); m.MC(e5); m.MC(e6);
     m.clear();
-    m.MC(new TerminalExpression(1004));
-    Expression* test = m.MR(); 
+    m.MC(new TerminalExpression<double>(1004));
+    Expression<double>* test = m.MR(); 
     cout << test->solve() << endl;
     cout << e1->solve() << endl;
     cout << e2->solve() << endl;

@@ -12,6 +12,7 @@
 #include "Expression/CosExpression.hpp"
 #include "Expression/TanExpression.hpp"
 
+#include <string>
 #include <QtDebug>
 
 Calculator::Calculator(QWidget *parent)
@@ -19,8 +20,8 @@ Calculator::Calculator(QWidget *parent)
     , ui(new Ui::Calculator)
 {
     ui->setupUi(this);
-    this->setFixedSize(500, 500);
-    expr = new TerminalExpression(0);
+    this->setFixedSize(428, 500);
+    expr = new TerminalExpression<double>(0);
     // Number
     connect(ui->btnNum00, SIGNAL(released()), this, SLOT(number_pressed()));
     connect(ui->btnNum0, SIGNAL(released()), this, SLOT(number_pressed()));
@@ -61,7 +62,7 @@ void Calculator::number_pressed()
 {
     delete expr;
     QPushButton* button = (QPushButton*) sender();
-    expr = new TerminalExpression((ui->display->text() + button->text()).toDouble());
+    expr = new TerminalExpression<double>((ui->display->text() + button->text()).toDouble());
     update_display();
 }
 
@@ -70,17 +71,17 @@ void Calculator::unaryOperation_pressed()
     delete expr;
     QPushButton* button = (QPushButton*) sender();
     if (button->text() == "%") {
-        expr = new PercentExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new PercentExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     } else if (button->text() == "x²") {
-        expr = new SquareExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new SquareExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     } else if (button->text() == "√") {
-        expr = new SqrtExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new SqrtExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     } else if (button->text() == "SIN") {
-        expr = new SinExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new SinExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     } else if (button->text() == "COS") {
-        expr = new CosExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new CosExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     } else if (button->text() == "TAN") {
-        expr = new TanExpression(new TerminalExpression((ui->display->text()).toDouble()));
+        expr = new TanExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
     }
     update_display();
 }
@@ -97,7 +98,7 @@ void Calculator::memoryOperation_pressed()
         mem.MC(expr);
     } else if (button->text() == "MR") {
         delete expr;
-        expr = new TerminalExpression(mem.MR()->solve());
+        expr = new TerminalExpression<double>(mem.MR()->solve());
         update_display();
     }
 }
@@ -106,7 +107,7 @@ void Calculator::on_btnDecimal_released()
 {
     // !!!PENDING DULU TUNGGU GENERIC
     delete expr;
-    expr = new TerminalExpression((ui->display->text() + ".6").toDouble());
+    expr = new TerminalExpression<double>((ui->display->text() + ".6").toDouble());
     update_display();
 }
 
@@ -120,7 +121,7 @@ void Calculator::update_display()
 void Calculator::on_btnClearExpr_released()
 {
     delete expr;
-    expr = new TerminalExpression(0);
+    expr = new TerminalExpression<double>(0);
     update_display();
 }
 
@@ -128,7 +129,7 @@ void Calculator::on_btnClearExpr_released()
 void Calculator::on_btnClear_released()
 {
     delete expr;
-    expr = new TerminalExpression(0);
+    expr = new TerminalExpression<double>(0);
     mem.clear();
     update_display();
 }
