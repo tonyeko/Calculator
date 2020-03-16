@@ -16,7 +16,7 @@ class Memory {
 		}
 		Expression<T>* MR() {
     		if (data.empty()) {
-        		// IF IS EMPTY THROW EXCEPTION
+        		//TODO: IF IS EMPTY THROW EXCEPTION
     		}
     		Expression<T>* x = data.front();
     		data.pop();

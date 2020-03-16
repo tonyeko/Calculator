@@ -37,7 +37,7 @@ HEADERS += \
     Expression/TerminalExpression.hpp \
     Expression/TrigonometryExpression.hpp \
     Expression/UnaryExpression.hpp \
-    calculator.h
+    calculator.hpp
 
 FORMS += \
     calculator.ui

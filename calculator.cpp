@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "calculator.hpp"
 #include "ui_calculator.h"
 //#include "Expression/Expression.hpp"
 #include "Expression/TerminalExpression.hpp"

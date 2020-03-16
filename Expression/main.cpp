@@ -13,7 +13,7 @@ using namespace std;
 int main() {
     Expression<double>* e1 = new SquareExpression<double>(new TerminalExpression<double>(5));
     e1 = new SinExpression<double>(new TerminalExpression<double>(5));
-    Expression<double>* e2 = new AddExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.91283));
+    Expression<double>* e2 = new AddExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.0));
     Expression<double>* e3 = new SubstractExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.91283));
     Expression<double>* e4 = new PercentExpression<double>(new TerminalExpression<double>(5));
     Expression<double>* e5 = new SinExpression<double>(new TerminalExpression<double>(2.45));
