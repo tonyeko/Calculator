@@ -21,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     Exception/BaseException.hpp \
+    Exception/DigitLimitException.hpp \
     Exception/DivideByZeroException.hpp \
     Exception/EmptyMemoryException.hpp \
     Exception/InvalidExpressionException.hpp \

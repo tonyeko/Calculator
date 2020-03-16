@@ -12,6 +12,7 @@
 #include "Expression/CosExpression.hpp"
 #include "Expression/TanExpression.hpp"
 #include "Exception/OperationFailedException.hpp"
+#include "Exception/DigitLimitException.hpp"
 
 #include <string>
 #include <QtDebug>
@@ -62,8 +63,13 @@ Calculator::~Calculator()
 
 void Calculator::setExpr(QString qStr)
 {
-    delete expr;
-    expr = new TerminalExpression<QString>(qStr);
+    if (expr->solve().length() > 15) {
+        throw new DigitLimitException();
+    } else {
+        delete expr;
+        expr = new TerminalExpression<QString>(qStr);
+    }
+
 }
 
 void Calculator::setAns(double exprValue)
@@ -126,7 +132,6 @@ void Calculator::memoryOperation_pressed()
             update_display();
             isErr = true;
         }
-
     }
 }
 
