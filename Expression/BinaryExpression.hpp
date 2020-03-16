@@ -9,9 +9,14 @@ protected:
     Expression<T>* x;
     Expression<T>* y;
 public:
-    BinaryExpression(Expression<T>* x, Expression<T>* y);
-    virtual ~BinaryExpression();
-    virtual T solve();
+    BinaryExpression(Expression<T>* x, Expression<T>* y) {
+    		this->x = x;
+    		this->y = y;
+	}
+	~BinaryExpression() {
+    		delete x;
+    		delete y;
+		}
 };
 
 #endif

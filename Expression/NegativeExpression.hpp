@@ -6,8 +6,10 @@
 template<class T>
 class NegativeExpression : public UnaryExpression<T> {
 	public:
-		NegativeExpression(Expression<T>* x);
-		T solve();
+		NegativeExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
+		T solve() {
+			return UnaryExpression<T>::x->solve() * -1;	
+		}
 };
 
 #endif

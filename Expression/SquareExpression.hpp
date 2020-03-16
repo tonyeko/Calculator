@@ -6,8 +6,10 @@
 template<class T>
 class SquareExpression : public UnaryExpression<T> {
 	public:
-		SquareExpression(Expression<T>* x);
-		double solve();
+		SquareExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
+		double solve() {
+			return UnaryExpression<T>::x->solve() * UnaryExpression<T>::x->solve();	
+		}
 };
 
 #endif

@@ -8,8 +8,12 @@ class UnaryExpression : public Expression<T> {
 protected:
     Expression<T>* x;
 public:
-    UnaryExpression(Expression<T>* x);
-    virtual ~UnaryExpression();
+    UnaryExpression(Expression<T>* x) {
+    	this->x = x;
+	}
+	virtual ~UnaryExpression() {
+    delete x;
+	}
     virtual T solve();
 };
 

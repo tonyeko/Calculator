@@ -6,8 +6,10 @@
 template<class T>
 class SqrtExpression : public UnaryExpression<T> {
 	public:
-		SqrtExpression(Expression<T>* x);
-		double solve();
+		SqrtExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
+		double solve() {
+			return sqrt(UnaryExpression<T>::x->solve());	
+		}
 };
 
 #endif
