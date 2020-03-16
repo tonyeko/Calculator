@@ -20,6 +20,13 @@ SOURCES += \
     calculator.cpp
 
 HEADERS += \
+    Exception/BaseException.hpp \
+    Exception/DigitLimitException.hpp \
+    Exception/DivideByZeroException.hpp \
+    Exception/EmptyMemoryException.hpp \
+    Exception/InvalidExpressionException.hpp \
+    Exception/NegativeSqrtException.hpp \
+    Exception/OperationFailedException.hpp \
     Expression/AddExpression.hpp \
     Expression/BinaryExpression.hpp \
     Expression/CosExpression.hpp \
@@ -32,7 +39,7 @@ HEADERS += \
     Expression/SinExpression.hpp \
     Expression/SqrtExpression.hpp \
     Expression/SquareExpression.hpp \
-    Expression/SubstractExpression.hpp \
+    Expression/SubtractExpression.hpp \
     Expression/TanExpression.hpp \
     Expression/TerminalExpression.hpp \
     Expression/TrigonometryExpression.hpp \

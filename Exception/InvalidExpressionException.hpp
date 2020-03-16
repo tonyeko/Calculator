@@ -1,17 +1,19 @@
+#ifndef __INVALIDEXPRESSION_EXCEPTION_HPP__
+#define __INVALIDEXPRESSION_EXCEPTION_HPP__
+
 #include "BaseException.hpp"
 #include <iostream>
 #include <string>
 using namespace std;
 
 class InvalidExpressionException : public BaseException {
-private:
-    string expr;
 public:
     InvalidExpressionException(string expr) {
-        this->expr = expr;
-        message += "Ekspresi " + expr + " tidak valid\n";
+        message = "NOT VALID";
     }
     string getMessage() {
         return message;
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __OPERATIONFAILED_EXCEPTION_HPP__
+#define __OPERATIONFAILED_EXCEPTION_HPP__
+
 #include "BaseException.hpp"
 #include <iostream>
 #include <string>
@@ -11,7 +14,10 @@ class OperationFailedException : public BaseException {
 			this->exc = exc;
 		}
 		string getMessage() {
-            message = "Error: ";
-			exc->getMessage();
+            message = "ERR: ";
+            message += exc->getMessage();
+            return message;
 		}
 };
+
+#endif

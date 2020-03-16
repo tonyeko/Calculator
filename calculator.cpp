@@ -11,17 +11,18 @@
 #include "Expression/SinExpression.hpp"
 #include "Expression/CosExpression.hpp"
 #include "Expression/TanExpression.hpp"
+#include "Exception/OperationFailedException.hpp"
+#include "Exception/DigitLimitException.hpp"
 
 #include <string>
 #include <QtDebug>
 
-Calculator::Calculator(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Calculator)
+Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calculator)
 {
     ui->setupUi(this);
     this->setFixedSize(428, 500);
     expr = new TerminalExpression<QString>("");
+    isErr = false;
     // Number
     connect(ui->btnNum00, SIGNAL(released()), this, SLOT(number_pressed()));
     connect(ui->btnNum0, SIGNAL(released()), this, SLOT(number_pressed()));
@@ -35,14 +36,20 @@ Calculator::Calculator(QWidget *parent)
     connect(ui->btnNum8, SIGNAL(released()), this, SLOT(number_pressed()));
     connect(ui->btnNum9, SIGNAL(released()), this, SLOT(number_pressed()));
     // Unary Operation
-    connect(ui->btnPercent, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
-    connect(ui->btnSquare, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
-    connect(ui->btnSqrt, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
-    connect(ui->btnSin, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
-    connect(ui->btnCos, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
-    connect(ui->btnTan, SIGNAL(released()), this, SLOT(unaryOperation_pressed()));
+    connect(ui->btnPercent, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnSquare, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnSqrt, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnSin, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnCos, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnTan, SIGNAL(released()), this, SLOT(operation_pressed()));
     // Binary Operation
-    connect(ui->btnAdd, SIGNAL(released()), this, SLOT(binaryOperation_pressed()));
+    connect(ui->btnAdd, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnSub, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnMultiply, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnDiv, SIGNAL(released()), this, SLOT(operation_pressed()));
+    // Other Operation
+    connect(ui->btnOpen, SIGNAL(released()), this, SLOT(operation_pressed()));
+    connect(ui->btnClose, SIGNAL(released()), this, SLOT(operation_pressed()));
     // Memory Operation
     connect(ui->btnMC, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
     connect(ui->btnMR, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
@@ -51,12 +58,23 @@ Calculator::Calculator(QWidget *parent)
 Calculator::~Calculator()
 {
     delete ui;
+    delete expr;
 }
 
 void Calculator::setExpr(QString qStr)
 {
-    delete expr;
-    expr = new TerminalExpression<QString>(qStr);
+    if (qStr.length() > 14) {
+        throw new DigitLimitException();
+    } else {
+        delete expr;
+        expr = new TerminalExpression<QString>(qStr);
+    }
+
+}
+
+void Calculator::setAns(double exprValue)
+{
+    ans = exprValue;
 }
 
 void Calculator::clearExpr()
@@ -65,63 +83,49 @@ void Calculator::clearExpr()
     expr = new TerminalExpression<QString>("");
 }
 
-double Calculator::getAns() {
-    return ans;
+void Calculator::clearErr()
+{
+    if (isErr) {
+        clearExpr();
+        isErr = false;
+    }
 }
 
 void Calculator::number_pressed()
 {
+    clearErr();
     QPushButton* button = (QPushButton*) sender();
-    setExpr((expr->solve() + button->text()));
-    update_display();
-}
-
-void Calculator::unaryOperation_pressed()
-{
-    QPushButton* button = (QPushButton*) sender();
-    if (button->text() == "x²") {
-        setExpr((expr->solve() + "²"));
-    } else {
+    try {
         setExpr((expr->solve() + button->text()));
-        if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
-            setExpr(expr->solve() + "(");
-        }
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
     }
-
-    update_display();
-
-//    delete expr;
-//    QPushButton* button = (QPushButton*) sender();
-//    if (button->text() == "%") {
-//        expr = new PercentExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "x²") {
-//        expr = new SquareExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "√") {
-//        expr = new SqrtExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "SIN") {
-//        expr = new SinExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "COS") {
-//        expr = new CosExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "TAN") {
-//        expr = new TanExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    }
-//    update_display();
 }
 
-void Calculator::binaryOperation_pressed()
+void Calculator::operation_pressed()
 {
-	QPushButton* button = (QPushButton*) sender();
-    setExpr((expr->solve() + button->text()));
-    update_display();
-//    if (button->text() == "+") {
-//    	expr = new AddExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//    } else if (button->text() == "-") {
-//    	expr = new SubstractExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//	  } else if (button->text() == "x") {
-//    	expr = new MultiplicationExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-//	  } else if (button->text() == "/") {
-//    	expr = new DivisionExpression<double>(new TerminalExpression<double>((ui->display->text()).toDouble()));
-
+    clearErr();
+    QPushButton* button = (QPushButton*) sender();
+    try {
+        if (button->text() == "x²") {
+            setExpr((expr->solve() + "²"));
+        } else {
+            setExpr((expr->solve() + button->text()));
+            if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
+                setExpr(expr->solve() + "(");
+            }
+        }
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
 }
 
 void Calculator::memoryOperation_pressed()
@@ -131,17 +135,31 @@ void Calculator::memoryOperation_pressed()
         // CEK VALID GA EXPRESI NYA
         mem.MC(new TerminalExpression<double>(expr->solve().toDouble()));
     } else if (button->text() == "MR") {
-        delete expr;
-        QString labelValue = QString::number(mem.MR()->solve(), 'g', 15);
-        expr = new TerminalExpression<QString>(labelValue);
-        update_display();
+        QString labelValue;
+        try {
+            labelValue = QString::number(mem.MR()->solve(), 'g', 15);
+            setExpr(labelValue);
+            update_display();
+        } catch (BaseException* exc) {
+            OperationFailedException* err = new OperationFailedException(exc);
+            setExpr(QString::fromStdString(err->getMessage()));
+            update_display();
+            isErr = true;
+        }
     }
 }
 
 void Calculator::on_btnDecimal_released()
 {
-    setExpr(expr->solve() + ".");
-    update_display();
+    try {
+        setExpr(expr->solve() + ".");
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
 }
 
 void Calculator::update_display()
@@ -155,7 +173,6 @@ void Calculator::on_btnClearExpr_released()
     clearExpr();
     update_display();
 }
-
 
 void Calculator::on_btnClear_released()
 {
