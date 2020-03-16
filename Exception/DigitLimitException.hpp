@@ -9,7 +9,7 @@ using namespace std;
 class DigitLimitException : public BaseException {
 public:
     DigitLimitException() {
-        message = "DIG > 15";
+        message = "EXPR > 14";
     }
     string getMessage() {
         return message;

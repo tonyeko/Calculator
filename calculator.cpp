@@ -63,7 +63,7 @@ Calculator::~Calculator()
 
 void Calculator::setExpr(QString qStr)
 {
-    if (expr->solve().length() > 15) {
+    if (qStr.length() > 14) {
         throw new DigitLimitException();
     } else {
         delete expr;
@@ -95,23 +95,37 @@ void Calculator::number_pressed()
 {
     clearErr();
     QPushButton* button = (QPushButton*) sender();
-    setExpr((expr->solve() + button->text()));
-    update_display();
+    try {
+        setExpr((expr->solve() + button->text()));
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
 }
 
 void Calculator::operation_pressed()
 {
     clearErr();
     QPushButton* button = (QPushButton*) sender();
-    if (button->text() == "x²") {
-        setExpr((expr->solve() + "²"));
-    } else {
-        setExpr((expr->solve() + button->text()));
-        if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
-            setExpr(expr->solve() + "(");
+    try {
+        if (button->text() == "x²") {
+            setExpr((expr->solve() + "²"));
+        } else {
+            setExpr((expr->solve() + button->text()));
+            if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
+                setExpr(expr->solve() + "(");
+            }
         }
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
     }
-    update_display();
 }
 
 void Calculator::memoryOperation_pressed()
@@ -137,8 +151,15 @@ void Calculator::memoryOperation_pressed()
 
 void Calculator::on_btnDecimal_released()
 {
-    setExpr(expr->solve() + ".");
-    update_display();
+    try {
+        setExpr(expr->solve() + ".");
+        update_display();
+    } catch (BaseException * exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
 }
 
 void Calculator::update_display()
@@ -152,7 +173,6 @@ void Calculator::on_btnClearExpr_released()
     clearExpr();
     update_display();
 }
-
 
 void Calculator::on_btnClear_released()
 {
