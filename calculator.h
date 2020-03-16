@@ -20,8 +20,8 @@ public:
 
 private:
     Ui::Calculator *ui;
-    Expression* expr;
-    Memory mem;
+    Expression<string>* expr;
+    Memory<string> mem;
     double ans;
 
 private slots:
