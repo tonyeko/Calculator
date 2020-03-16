@@ -8,6 +8,7 @@
 #define DATA_HPP
 #include <iostream>
 #include <vector>
+#include "Exception/NullPointerException.hpp"
 using namespace std;
 
 class Data {
@@ -24,6 +25,7 @@ public:
 
     void parseInput() {
         if (input.empty()) {
+            throw NullPointerException();    
             // THROW NULL POINTER EXCEPTION
         } else {
             cout <<  "Parses\n";//Parse
