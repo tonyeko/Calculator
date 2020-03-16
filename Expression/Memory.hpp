@@ -2,6 +2,7 @@
 #define MEMORY_HPP_
 
 #include "TerminalExpression.hpp"
+#include "../Exception/EmptyMemoryException.hpp"
 #include <queue>
 using namespace std;
 
@@ -16,7 +17,8 @@ class Memory {
 		}
 		Expression<T>* MR() {
     		if (data.empty()) {
-        		// IF IS EMPTY THROW EXCEPTION
+        		EmptyMemoryException* err = new EmptyMemoryException();
+				throw err;
     		}
     		Expression<T>* x = data.front();
     		data.pop();

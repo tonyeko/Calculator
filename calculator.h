@@ -16,20 +16,21 @@ class Calculator : public QMainWindow
 public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
-    void setExpr(QString qStr);
+    void setExpr(QString);
+    void setAns(double);
     void clearExpr();
-    double getAns();
+    void clearErr();
 
 private:
     Ui::Calculator *ui;
     Expression<QString>* expr;
     Memory<double> mem;
     double ans;
+    bool isErr;
 
 private slots:
     void number_pressed();
-    void unaryOperation_pressed();
-    void binaryOperation_pressed();
+    void operation_pressed();
     void memoryOperation_pressed();
     void update_display();
     void on_btnDecimal_released();
