@@ -1,20 +1,23 @@
 #include "Memory.hpp"
+#include "TerminalExpression.hpp"
 #include <iostream>
 using namespace std;
 
 void Memory::MC(Expression* x) {
-    Mem.push(x);
+    data.push(new TerminalExpression(x->solve()));
 }
 
 Expression* Memory::MR() {
-    Expression* x = Mem.front();
-    Mem.pop();
+    if (data.empty()) {
+        // IF IS EMPTY THROW EXCEPTION
+    }
+    Expression* x = data.front();
+    data.pop();
     return x;
 }
 
 void Memory::clear() {
-    while (!Mem.empty()) {
-        Mem.pop();
+    while (!data.empty()) {
+        data.pop();
     }
-    
 }

@@ -7,7 +7,7 @@ using namespace std;
 
 class Memory {
 	private:
-		queue<Expression*> Mem;
+        queue<Expression*> data;
 	public:
 		Memory() {};
 		void MC(Expression* x);

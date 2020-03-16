@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>499</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="palette">
@@ -25,9 +25,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>248</red>
-        <green>97</green>
-        <blue>90</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -97,18 +97,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
-        <blue>255</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>170</green>
-        <blue>0</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -171,9 +171,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>128</green>
-        <blue>124</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -243,18 +243,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>170</green>
-        <blue>0</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -317,9 +317,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>170</green>
-        <blue>0</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -389,18 +389,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>170</green>
-        <blue>0</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>170</green>
-        <blue>0</blue>
+        <red>253</red>
+        <green>94</green>
+        <blue>83</blue>
        </color>
       </brush>
      </colorrole>
@@ -516,7 +516,7 @@
      <string>C</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnSqrt">
+   <widget class="QPushButton" name="btnClearExpr">
     <property name="geometry">
      <rect>
       <x>88</x>
@@ -865,7 +865,7 @@
      <string>-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnadd">
+   <widget class="QPushButton" name="btnAdd">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -1477,7 +1477,7 @@
      <string>TAN</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnClearAll">
+   <widget class="QPushButton" name="btnSqrt">
     <property name="geometry">
      <rect>
       <x>412</x>

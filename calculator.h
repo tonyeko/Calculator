@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Expression/Expression.hpp"
+#include "Expression/Memory.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Calculator; }
@@ -15,13 +16,22 @@ class Calculator : public QMainWindow
 public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
-    Expression* expr;
+    double getAns();
 
 private:
     Ui::Calculator *ui;
+    Expression* expr;
+    Memory mem;
+    double ans;
 
 private slots:
     void number_pressed();
-    void on_decimalButton_released();
+    void unaryOperation_pressed();
+    void binaryOperation_pressed();
+    void memoryOperation_pressed();
+    void update_display();
+    void on_btnDecimal_released();
+    void on_btnClear_released();
+    void on_btnClearExpr_released();
 };
 #endif // CALCULATOR_H
