@@ -2,6 +2,7 @@
 #define SQRT_EXPRESSION_HPP_
 
 #include "UnaryExpression.hpp"
+#include <cmath>
 
 template<class T>
 class SqrtExpression : public UnaryExpression<T> {
