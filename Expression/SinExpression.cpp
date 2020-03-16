@@ -1,8 +1,10 @@
 #include "SinExpression.hpp"
 #include <cmath>
 
-SinExpression::SinExpression(Expression* x) : TrigonometryExpression(x) {}
+template<class T>
+SinExpression<T>::SinExpression(Expression<T>* x) : TrigonometryExpression<T>(x) {}
 
-double SinExpression::solve() {
-	return sin(x->solve());	
+template<class T>
+double SinExpression<T>::solve() {
+	return sin(TrigonometryExpression<T>::x->solve());	
 }

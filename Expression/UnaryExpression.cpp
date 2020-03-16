@@ -1,9 +1,11 @@
 #include "UnaryExpression.hpp"
 
-UnaryExpression::UnaryExpression(Expression* x) {
+template<class T>
+UnaryExpression<T>::UnaryExpression(Expression<T>* x) {
     this->x = x;
 }
 
-UnaryExpression::~UnaryExpression() {
+template<class T>
+UnaryExpression<T>::~UnaryExpression() {
     delete x;
 }

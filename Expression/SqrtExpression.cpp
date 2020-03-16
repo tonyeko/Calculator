@@ -1,8 +1,10 @@
 #include "SqrtExpression.hpp"
 #include <cmath>
 
-SqrtExpression::SqrtExpression(Expression* x) : UnaryExpression(x) {}
+template<class T>
+SqrtExpression<T>::SqrtExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
 
-double SqrtExpression::solve() {
-	return sqrt(x->solve());	
+template<class T>
+double SqrtExpression<T>::solve() {
+	return sqrt(UnaryExpression<T>::x->solve());	
 }

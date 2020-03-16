@@ -3,10 +3,11 @@
 
 #include "UnaryExpression.hpp"
 
-class PercentExpression : public UnaryExpression {
+template<class T>
+class PercentExpression : public UnaryExpression<T> {
 	public:
-		PercentExpression(Expression* x);
-		double solve();
+		PercentExpression(Expression<T>* x);
+		T solve();
 };
 
 #endif

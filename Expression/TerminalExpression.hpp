@@ -3,12 +3,13 @@
 
 #include "Expression.hpp"
 
-class TerminalExpression : public Expression {
+template<class T>
+class TerminalExpression : public Expression<T> {
 protected:
-    double x;
+    T x;
 public:
-    TerminalExpression(double x);
-    double solve();
+    TerminalExpression(T x);
+    T solve();
 };
 
 #endif

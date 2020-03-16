@@ -3,14 +3,15 @@
 
 #include "Expression.hpp"
 
-class BinaryExpression : public Expression {
+template<class T>
+class BinaryExpression : public Expression<T> {
 protected:
-    Expression* x;
-    Expression* y;
+    Expression<T>* x;
+    Expression<T>* y;
 public:
-    BinaryExpression(Expression* x, Expression* y);
+    BinaryExpression(Expression<T>* x, Expression<T>* y);
     virtual ~BinaryExpression();
-    virtual double solve() = 0;
+    virtual T solve();
 };
 
 #endif

@@ -3,13 +3,14 @@
 
 #include "Expression.hpp"
 
-class UnaryExpression : public Expression {
+template<class T>
+class UnaryExpression : public Expression<T> {
 protected:
-    Expression* x;
+    Expression<T>* x;
 public:
-    UnaryExpression(Expression* x);
+    UnaryExpression(Expression<T>* x);
     virtual ~UnaryExpression();
-    virtual double solve() = 0;
+    virtual T solve();
 };
 
 #endif

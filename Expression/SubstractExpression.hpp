@@ -3,10 +3,11 @@
 
 #include "BinaryExpression.hpp"
 
-class SubstractExpression : public BinaryExpression {
+template<class T>
+class SubstractExpression : public BinaryExpression<T> {
 	public:
-		SubstractExpression(Expression* x, Expression* y);
-		double solve();
+		SubstractExpression(Expression<T>* x, Expression<T>* y);
+		T solve();
 };
 
 #endif

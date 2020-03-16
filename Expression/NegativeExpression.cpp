@@ -1,7 +1,9 @@
 #include "NegativeExpression.hpp"
 
-NegativeExpression::NegativeExpression(Expression* x) : UnaryExpression(x) {}
+template<class T>
+NegativeExpression<T>::NegativeExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
 
-double NegativeExpression::solve() {
-	return x->solve() * -1;	
+template<class T>
+T NegativeExpression<T>::solve() {
+	return UnaryExpression<T>::x->solve() * -1;	
 }

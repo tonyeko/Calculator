@@ -3,20 +3,23 @@
 #include <iostream>
 using namespace std;
 
-void Memory::MC(Expression* x) {
-    data.push(new TerminalExpression(x->solve()));
+template<class T>
+void Memory<T>::MC(Expression<T>* x) {
+    data.push(new TerminalExpression<T>(x->solve()));
 }
 
-Expression* Memory::MR() {
+template<class T>
+Expression<T>* Memory<T>::MR() {
     if (data.empty()) {
         // IF IS EMPTY THROW EXCEPTION
     }
-    Expression* x = data.front();
+    Expression<T>* x = data.front();
     data.pop();
     return x;
 }
 
-void Memory::clear() {
+template<class T>
+void Memory<T>::clear() {
     while (!data.empty()) {
         data.pop();
     }

@@ -3,9 +3,10 @@
 
 #include "TrigonometryExpression.hpp"
 
-class CosExpression : public TrigonometryExpression {
+template<class T>
+class CosExpression : public TrigonometryExpression<T> {
 	public:
-		CosExpression(Expression* x);
+		CosExpression(Expression<T>* x);
 		double solve();
 };
 

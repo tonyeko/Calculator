@@ -1,7 +1,9 @@
 #include "MultiplicationExpression.hpp"
 
-MultiplicationExpression::MultiplicationExpression(Expression *x, Expression *y) : BinaryExpression(x, y) {}
+template<class T>
+MultiplicationExpression<T>::MultiplicationExpression(Expression<T> *x, Expression<T> *y) : BinaryExpression<T>(x, y) {}
 
-double MultiplicationExpression::solve() {
-	return x->solve() * y->solve();	
+template<class T>
+T MultiplicationExpression<T>::solve() {
+	return BinaryExpression<T>::x->solve() * BinaryExpression<T>::y->solve();	
 }

@@ -1,8 +1,10 @@
 #include "TanExpression.hpp"
 #include <cmath>
 
-TanExpression::TanExpression(Expression* x) : TrigonometryExpression(x) {}
+template<class T>
+TanExpression<T>::TanExpression(Expression<T>* x) : TrigonometryExpression<T>(x) {}
 
-double TanExpression::solve() {
-	return tan(x->solve());	
+template<class T>
+double TanExpression<T>::solve() {
+	return tan(TrigonometryExpression<T>::x->solve());	
 }

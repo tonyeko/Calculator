@@ -1,7 +1,9 @@
 #include "PercentExpression.hpp"
 
-PercentExpression::PercentExpression(Expression* x) : UnaryExpression(x) {}
+template<class T>
+PercentExpression<T>::PercentExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
 
-double PercentExpression::solve() {
-	return x->solve() / 100;	
+template<class T>
+T PercentExpression<T>::solve() {
+	return UnaryExpression<T>::x->solve() / 100;	
 }

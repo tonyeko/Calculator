@@ -5,13 +5,14 @@
 #include <queue>
 using namespace std;
 
+template<class T>
 class Memory {
 	private:
-        queue<Expression*> data;
+        queue<Expression<T>*> data;
 	public:
 		Memory() {};
-		void MC(Expression* x);
-		Expression* MR();
+		void MC(Expression<T>* x);
+		Expression<T>* MR();
 		void clear();
 };
 

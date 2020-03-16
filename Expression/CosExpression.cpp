@@ -1,8 +1,10 @@
 #include "CosExpression.hpp"
 #include <cmath>
 
-CosExpression::CosExpression(Expression* x) : TrigonometryExpression(x) {}
+template<class T>
+CosExpression<T>::CosExpression(Expression<T>* x) : TrigonometryExpression<T>(x) {}
 
-double CosExpression::solve() {
-	return cos(x->solve());	
+template<class T>
+double CosExpression<T>::solve() {
+	return cos(TrigonometryExpression<T>::x->solve());	
 }

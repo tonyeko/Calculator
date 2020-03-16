@@ -3,10 +3,11 @@
 
 #include "BinaryExpression.hpp"
 
-class AddExpression : public BinaryExpression {
+template<class T>
+class AddExpression : public BinaryExpression<T> {
 	public:
-		AddExpression(Expression *x, Expression *y);
-		double solve();
+		AddExpression(Expression<T> *x, Expression<T> *y);
+		T solve();
 };
 
 #endif

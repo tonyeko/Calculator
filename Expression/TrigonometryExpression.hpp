@@ -3,10 +3,11 @@
 
 #include "UnaryExpression.hpp"
 
-class TrigonometryExpression : public UnaryExpression {
+template<class T>
+class TrigonometryExpression : public UnaryExpression<T> {
 	public:
-		TrigonometryExpression(Expression* x);
-		virtual double solve() = 0;
+		TrigonometryExpression(Expression<T>* x);
+		virtual T solve();
 };
 
 #endif

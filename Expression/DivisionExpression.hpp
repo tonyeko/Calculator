@@ -3,9 +3,10 @@
 
 #include "BinaryExpression.hpp"
 
-class DivisionExpression : public BinaryExpression {
+template<class T>
+class DivisionExpression : public BinaryExpression<T> {
 	public:
-		DivisionExpression(Expression *x, Expression *y);
+		DivisionExpression(Expression<T> *x, Expression<T> *y);
 		double solve();
 };
 

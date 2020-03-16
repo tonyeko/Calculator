@@ -1,11 +1,13 @@
 #include "BinaryExpression.hpp"
 
-BinaryExpression::BinaryExpression(Expression* x, Expression* y) {
+template<class T>
+BinaryExpression<T>::BinaryExpression(Expression<T>* x, Expression<T>* y) {
     this->x = x;
     this->y = y;
 }
 
-BinaryExpression::~BinaryExpression() {
+template<class T>
+BinaryExpression<T>::~BinaryExpression() {
     delete x;
     delete y;
 }

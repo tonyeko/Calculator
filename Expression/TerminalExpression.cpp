@@ -1,9 +1,11 @@
 #include "TerminalExpression.hpp"
 
-TerminalExpression::TerminalExpression(double x) {
+template<class T>
+TerminalExpression<T>::TerminalExpression(T x) {
     this->x = x;
 }
 
-double TerminalExpression::solve() {
+template<class T>
+T TerminalExpression<T>::solve() {
     return this->x;
 }

@@ -1,3 +1,4 @@
 #include "TrigonometryExpression.hpp"
 
-TrigonometryExpression::TrigonometryExpression(Expression* x) : UnaryExpression(x) {}
+template<class T>
+TrigonometryExpression<T>::TrigonometryExpression(Expression<T>* x) : UnaryExpression<T>(x) {}

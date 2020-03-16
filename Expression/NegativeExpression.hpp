@@ -3,10 +3,11 @@
 
 #include "UnaryExpression.hpp"
 
-class NegativeExpression : public UnaryExpression {
+template<class T>
+class NegativeExpression : public UnaryExpression<T> {
 	public:
-		NegativeExpression(Expression* x);
-		double solve();
+		NegativeExpression(Expression<T>* x);
+		T solve();
 };
 
 #endif

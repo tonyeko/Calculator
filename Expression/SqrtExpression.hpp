@@ -3,9 +3,10 @@
 
 #include "UnaryExpression.hpp"
 
-class SqrtExpression : public UnaryExpression {
+template<class T>
+class SqrtExpression : public UnaryExpression<T> {
 	public:
-		SqrtExpression(Expression* x);
+		SqrtExpression(Expression<T>* x);
 		double solve();
 };
 

@@ -3,9 +3,10 @@
 
 #include "TrigonometryExpression.hpp"
 
-class SinExpression : public TrigonometryExpression {
+template<class T>
+class SinExpression : public TrigonometryExpression<T> {
 	public:
-		SinExpression(Expression* x);
+		SinExpression(Expression<T>* x);
 		double solve();
 };
 

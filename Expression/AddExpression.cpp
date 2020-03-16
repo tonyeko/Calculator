@@ -1,7 +1,10 @@
 #include "AddExpression.hpp"
 
-AddExpression::AddExpression(Expression *x, Expression *y) : BinaryExpression(x, y) {}
+template<class T>
+AddExpression<T>::AddExpression(Expression<T> *x, Expression<T> *y) : BinaryExpression<T>(x,y) {
+}
 
-double AddExpression::solve() {
-	return x->solve() + y->solve();	
+template<class T>
+T AddExpression<T>::solve() {
+	return BinaryExpression<T>::x->solve() + BinaryExpression<T>::y->solve();	
 }

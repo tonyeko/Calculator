@@ -1,7 +1,9 @@
 #include "SquareExpression.hpp"
 
-SquareExpression::SquareExpression(Expression* x) : UnaryExpression(x) {}
+template<class T>
+SquareExpression<T>::SquareExpression(Expression<T>* x) : UnaryExpression<T>(x) {}
 
-double SquareExpression::solve() {
-	return x->solve() * x->solve();	
+template<class T>
+double SquareExpression<T>::solve() {
+	return UnaryExpression<T>::x->solve() * UnaryExpression<T>::x->solve();	
 }

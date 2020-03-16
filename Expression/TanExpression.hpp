@@ -3,9 +3,10 @@
 
 #include "TrigonometryExpression.hpp"
 
-class TanExpression : public TrigonometryExpression {
+template<class T>
+class TanExpression : public TrigonometryExpression<T> {
 	public:
-		TanExpression(Expression* x);
+		TanExpression(Expression<T>* x);
 		double solve();
 };
 

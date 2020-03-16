@@ -1,8 +1,10 @@
 #include "SubstractExpression.hpp"
 
-SubstractExpression::SubstractExpression(Expression* x, Expression* y) : BinaryExpression(x,y) {}
+template<class T>
+SubstractExpression<T>::SubstractExpression(Expression<T>* x, Expression<T>* y) : BinaryExpression<T>(x,y) {}
 
-double SubstractExpression::solve() {
-	return x->solve() - y->solve();	
+template<class T>
+T SubstractExpression<T>::solve() {
+	return BinaryExpression<T>::x->solve() - BinaryExpression<T>::y->solve();	
 }
 
