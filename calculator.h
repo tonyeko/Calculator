@@ -2,7 +2,6 @@
 #define CALCULATOR_H
 
 #include <QMainWindow>
-#include <string>
 #include "Expression/Expression.hpp"
 #include "Expression/Memory.hpp"
 
@@ -17,11 +16,13 @@ class Calculator : public QMainWindow
 public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
+    void setExpr(QString qStr);
+    void clearExpr();
     double getAns();
 
 private:
     Ui::Calculator *ui;
-    Expression<double>* expr;
+    Expression<QString>* expr;
     Memory<double> mem;
     double ans;
 
