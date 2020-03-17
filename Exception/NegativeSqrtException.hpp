@@ -9,7 +9,7 @@ using namespace std;
 class NegativeSqrtException : public BaseException {
 public:
     NegativeSqrtException() {
-        message = "NEG SQRT\n";
+        message = "NEG SQRT";
     }
     string getMessage() {
         return message;

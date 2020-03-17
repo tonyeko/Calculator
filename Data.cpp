@@ -13,7 +13,8 @@ Data::Data(string inp) {
 }
 Data::~Data() {}
 
-void Data::inputOp(double& val, string& type, string input) {
+void Data::inputOp(bool &percent, double &val, string &type, string input) {
+    percent = false;
     vecData.push_back(make_pair(val,type));
     val = 0;
     type = input;
@@ -26,6 +27,7 @@ void Data::parseInput() {
     {   
         bool sin, cos, tan;
         bool neg = false;
+        bool percent = false;
         double value = 0.0;
         string type = "null";
         string::iterator it;
@@ -53,6 +55,7 @@ void Data::parseInput() {
                 case '7':
                 case '8':
                 case '9':
+                    if (percent) throw InvalidExpressionException("percent");
                     type = "num";
                     // cout << "Value : " << value << endl;
                     if (neg) {
@@ -67,31 +70,61 @@ void Data::parseInput() {
                     break;
                 // * Operators
                 case '+':
-                    if (type == "num") inputOp(value,type,"plus");
+                    if (type == "num") inputOp(percent,value,type,"plus");
                     else if (type == "subtract") type = "num";
-                    else throw InvalidOperatorException();
+                    else throw InvalidExpressionException("add");
                     break;
                 case '-':
                     if (type == "subtract") throw DoubleNegationException();
-                    else if (type == "num") inputOp(value,type,"subtract");
+                    else if (type == "num") inputOp(percent,value,type,"subtract");
                     else {
                         type = "subtract";
                         neg = true;
-                    } // throw InvalidOperatorException();
+                    } // throw InvalidExpressionException();
                     break;
                 case '*':
-                    if (type == "num") inputOp(value,type,"multiply");
-                    else throw InvalidOperatorException();
+                    if (type == "num") inputOp(percent,value,type,"multiply");
+                    else throw InvalidExpressionException("multiply");
                     break;
                 case '/':
-                    if (type == "num") inputOp(value,type,"divide");
-                    else throw InvalidOperatorException();
+                    if (type == "num") inputOp(percent,value,type,"divide");
+                    else throw InvalidExpressionException("divide");
                     break;
-
+                case '(':
+                    if (type == "num" || type == "close" || percent) {
+                        cout << "Mashok\n";
+                        inputOp(percent,value,type,"multiply");
+                    }
+                    inputOp(percent,value,type,"open");
+                    break;
+                case ')':
+                    if (type == "open") throw EmptyParenthesesException();
+                    else if (type == "close" || type == "num") inputOp(percent,value,type,"close");
+                    else throw InvalidExpressionException("close parentheses");
+                    break;
+                case '%':
+                    if (type == "num") value *= 0.01;
+                    else if (type == "close") {
+                        inputOp(percent,value,type,"multiply");
+                        value = 0.1;
+                        type = "num";
+                    } else throw InvalidExpressionException("percent");
+                    percent = true;
+                    break;
+                // case '²':
+                //     if (type == "num") {
+                //         value *= value;
+                //     } else if (type == "close") {
+                //         inputOp(percent,value,type,"square");
+                //     } else throw InvalidExpressionException("square");
+                //     break;
+                
             }
             cout << *it << endl;
         }
-        vecData.push_back(make_pair(value,type));
+        if (type == "num") vecData.push_back(make_pair(value,type));
+        else if (type == "close") {}
+        else throw InvalidExpressionException("end");
         cout <<  "Parsed Successfully\n";
     }
 }
