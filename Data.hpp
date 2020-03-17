@@ -12,6 +12,7 @@
 #include "Exception/NullPointerException.hpp"
 #include "Exception/InvalidOperatorException.hpp"
 #include "Exception/DoubleNegationException.hpp"
+#include "Exception/DivideByZeroException.hpp"
 using namespace std;
 
 class Data {
@@ -23,6 +24,7 @@ public:
     Data(string inp);
     ~Data();
     void parseInput();
+    void inputOp(double& val, string& type, string input);
     void debugData();
 };
 

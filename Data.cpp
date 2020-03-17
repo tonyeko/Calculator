@@ -13,6 +13,12 @@ Data::Data(string inp) {
 }
 Data::~Data() {}
 
+void Data::inputOp(double& val, string& type, string input) {
+    vecData.push_back(make_pair(val,type));
+    val = 0;
+    type = input;
+    vecData.push_back(make_pair(0,type));
+}
 
 void Data::parseInput() {
     if (input.empty()) throw NullPointerException();    
@@ -24,20 +30,19 @@ void Data::parseInput() {
         string type = "null";
         string::iterator it;
         for (it=input.begin(); it!=input.end(); it++) {
-
+            cout << "Type skrg: " << type << endl;
             switch(*it) {
-                // Numbers
+                // *Numbers
                 case '0':
-                    type = "num";
-                    if (value != 0) {
-                        value *= 10;
-                    } else if (neg) {
+                    if (value != 0) value *= 10;
+                    else if (neg) {
                         while (*it == '0') {
                             it++;
                         }
                         if (*it > 57 || *it < 48) neg = false;
                         it--;
-                    }
+                    } // DivideByZero dihandle di calculate
+                    type = "num";
                     break;
                 case '1':
                 case '2':
@@ -60,29 +65,29 @@ void Data::parseInput() {
                     }
                     // cout << "Value New : " << value << endl;
                     break;
-                // Operators
+                // * Operators
                 case '+':
-                    if (type == "num") {
-                        vecData.push_back(make_pair(value,type));
-                        value = 0;
-                        vecData.push_back(make_pair(0,"plus"));
-                    } else {
-                        throw InvalidOperatorException();
-                    }
+                    if (type == "num") inputOp(value,type,"plus");
+                    else if (type == "subtract") type = "num";
+                    else throw InvalidOperatorException();
                     break;
                 case '-':
-                    if (neg && value != 0) {
-                        throw DoubleNegationException();
-                    } if (type == "num") {
-                        vecData.push_back(make_pair(value,type));
-                        value = 0;
-                        vecData.push_back(make_pair(0,"subtract"));
-                    } else {
-                        type = "num";
+                    if (type == "subtract") throw DoubleNegationException();
+                    else if (type == "num") inputOp(value,type,"subtract");
+                    else {
+                        type = "subtract";
                         neg = true;
-                    }
-                        // throw InvalidOperatorException();
+                    } // throw InvalidOperatorException();
                     break;
+                case '*':
+                    if (type == "num") inputOp(value,type,"multiply");
+                    else throw InvalidOperatorException();
+                    break;
+                case '/':
+                    if (type == "num") inputOp(value,type,"divide");
+                    else throw InvalidOperatorException();
+                    break;
+
             }
             cout << *it << endl;
         }
