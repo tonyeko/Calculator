@@ -56,6 +56,7 @@ void Data::parseInput() {
                 case '8':
                 case '9':
                     if (percent) throw InvalidExpressionException("percent");
+                    else if (type == "close") throw InvalidExpressionException("close parentheses");
                     type = "num";
                     // cout << "Value : " << value << endl;
                     if (neg) {
@@ -71,36 +72,40 @@ void Data::parseInput() {
                 // * Operators
                 case '+':
                     if (type == "num") inputOp(percent,value,type,"plus");
-                    else if (type == "subtract") type = "num";
+                    else if (type == "subtract" || type=="close") type = "num";
                     else throw InvalidExpressionException("add");
                     break;
                 case '-':
                     if (type == "subtract") throw DoubleNegationException();
-                    else if (type == "num") inputOp(percent,value,type,"subtract");
+                    else if (type == "num" || type=="close") inputOp(percent,value,type,"subtract");
                     else {
                         type = "subtract";
                         neg = true;
                     } // throw InvalidExpressionException();
                     break;
                 case '*':
-                    if (type == "num") inputOp(percent,value,type,"multiply");
+                    if (type == "num" || type=="close") inputOp(percent,value,type,"multiply");
                     else throw InvalidExpressionException("multiply");
                     break;
                 case '/':
-                    if (type == "num") inputOp(percent,value,type,"divide");
+                    if (type == "num" || type=="close") inputOp(percent,value,type,"divide");
                     else throw InvalidExpressionException("divide");
                     break;
                 case '(':
                     if (type == "num" || type == "close" || percent) {
-                        cout << "Mashok\n";
                         inputOp(percent,value,type,"multiply");
                     }
-                    inputOp(percent,value,type,"open");
+                    type = "open";
+                    vecData.push_back(make_pair(value,type));
                     break;
                 case ')':
                     if (type == "open") throw EmptyParenthesesException();
-                    else if (type == "close" || type == "num") inputOp(percent,value,type,"close");
-                    else throw InvalidExpressionException("close parentheses");
+                    else if (type == "close" || type == "num") {
+                        percent = false;
+                        vecData.push_back(make_pair(value,type));
+                        value = 0;
+                        type = "close";
+                    } else throw InvalidExpressionException("close parentheses");
                     break;
                 case '%':
                     if (type == "num") value *= 0.01;
