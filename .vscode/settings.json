@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.pl": "elpi",
+        "vector": "cpp",
+        "xstring": "cpp"
+    }
+}

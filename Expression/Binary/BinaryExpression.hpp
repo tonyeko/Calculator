@@ -1,7 +1,7 @@
 #ifndef BINARY_EXPRESSION_HPP_
 #define BINARY_EXPRESSION_HPP_
 
-#include "Expression.hpp"
+#include "../Expression.hpp"
 
 template<class T>
 class BinaryExpression : public Expression<T> {

@@ -1,7 +1,7 @@
 #ifndef UNARY_EXPRESSION_HPP_
 #define UNARY_EXPRESSION_HPP_
 
-#include "Expression.hpp"
+#include "../Expression.hpp"
 
 template<class T>
 class UnaryExpression : public Expression<T> {

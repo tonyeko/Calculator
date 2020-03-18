@@ -1,7 +1,7 @@
 #ifndef TRIGONOMETRY_EXPRESSION_HPP_
 #define TRIGONOMETRY_EXPRESSION_HPP_
 
-#include "UnaryExpression.hpp"
+#include "../UnaryExpression.hpp"
 
 template<class T>
 class TrigonometryExpression : public UnaryExpression<T> {
