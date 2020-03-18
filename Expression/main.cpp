@@ -6,6 +6,7 @@
 #include "SinExpression.hpp"
 #include "CosExpression.hpp"
 #include "TanExpression.hpp"
+#include "DecimalExpression.hpp"
 #include "Memory.hpp"
 #include <iostream>
 using namespace std;
@@ -19,6 +20,7 @@ int main() {
     Expression<double>* e5 = new SinExpression<double>(new TerminalExpression<double>(2.45));
     Expression<double>* e6 = new CosExpression<double>(new TerminalExpression<double>(2.45));
     Expression<double>* e7 = new TanExpression<double>(new TerminalExpression<double>(2.45));
+    Expression<double>* e8 = new DecimalExpression<double, 5>(new TerminalExpression<double>(12345));
     Memory<double> m;
     m.MC(e1); m.MC(e2); m.MC(e3); m.MC(e4); m.MC(e5); m.MC(e6);
     m.clear();
@@ -32,6 +34,7 @@ int main() {
     cout << e5->solve() << endl;
     cout << e6->solve() << endl;
     cout << e7->solve() << endl;
+    cout << e8->solve() << endl;
 
     delete e1;
     delete e2;
@@ -40,5 +43,6 @@ int main() {
     delete e5;
     delete e6;
     delete e7;
+    delete e8;
     return 0;
 }

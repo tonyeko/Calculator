@@ -1,5 +1,5 @@
 // Data.cpp
-// Contributor : 13518135
+// Contributor : 13518135, 13518030
 /*  Implementasi Data.hpp
 */
 
@@ -26,6 +26,7 @@ void Data::parseInput() {
     else
     {   
         bool sin, cos, tan;
+        bool foundDecimal = false;
         bool neg = false;
         bool percent = false;
         double value = 0.0;
@@ -45,30 +46,7 @@ void Data::parseInput() {
                         it--;
                     } // DivideByZero dihandle di calculate
                     type = "num";
-                    break;
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    if (percent) throw InvalidExpressionException("percent");
-                    else if (type == "close") throw InvalidExpressionException("close parentheses");
-                    type = "num";
-                    // cout << "Value : " << value << endl;
-                    if (neg) {
-                        value = -1*((double) (*it) - 48);
-                        neg = false;
-                    } else if (value < 0) {
-                        value = value*10 - ((double) (*it) - 48);
-                    } else { 
-                        value = value*10 + ((double) (*it) - 48); 
-                    }
-                    // cout << "Value New : " << value << endl;
-                    break;
+                    break;    
                 // * Operators
                 case '+':
                     if (type == "num") inputOp(percent,value,type,"plus");
@@ -116,6 +94,12 @@ void Data::parseInput() {
                     } else throw InvalidExpressionException("percent");
                     percent = true;
                     break;
+                case '.':
+                    if (foundDecimal) throw InvalidExpressionException("decimal");
+                    else {
+                        foundDecimal = true;
+                        break;
+                    }
                 // case '²':
                 //     if (type == "num") {
                 //         value *= value;
@@ -123,6 +107,21 @@ void Data::parseInput() {
                 //         inputOp(percent,value,type,"square");
                 //     } else throw InvalidExpressionException("square");
                 //     break;
+                default:
+                    if (percent) throw InvalidExpressionException("percent");
+                    else if (type == "close") throw InvalidExpressionException("close parentheses");
+                    type = "num";
+                    // cout << "Value : " << value << endl;
+                    if (neg) {
+                        value = -1*((double) (*it) - 48);
+                        neg = false;
+                    } else if (value < 0) {
+                        value = value*10 - ((double) (*it) - 48);
+                    } else { 
+                        value = value*10 + ((double) (*it) - 48); 
+                    }
+                    // cout << "Value New : " << value << endl;
+                    break;
                 
             }
             cout << *it << endl;
