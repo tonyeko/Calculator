@@ -11,7 +11,7 @@
 
 // Global variable
 double ans;
-bool isErr, isAnswered;
+bool isErr, isAnswered, ansPressed;
 
 Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calculator)
 {
@@ -20,6 +20,7 @@ Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calcul
     expr = new TerminalExpression<QString>("");
     isErr = false;
     isAnswered = false;
+    ansPressed = false;
     // Number
     connect(ui->btnNum00, SIGNAL(released()), this, SLOT(number_pressed()));
     connect(ui->btnNum0, SIGNAL(released()), this, SLOT(number_pressed()));
@@ -64,18 +65,14 @@ void Calculator::setExpr(QString qStr)
     expr = new TerminalExpression<QString>(qStr);
 }
 
-void Calculator::setAns(double exprValue)
-{
-    ans = exprValue;
-}
-
 void Calculator::exprCheck()
 {
     QString str = expr->solve();
+    if (isErr) throw new InvalidExpressionException("ERR EXPR");
     if (str.length() == 0) throw new InvalidExpressionException("EMPTY");
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == "-" && (str[i+1] == "-" || i+1 == str.length())) {
-            throw new InvalidExpressionException("DOUBLE NEG");
+            throw new InvalidExpressionException("DBL NEG");
         }
         if (str[i] == "÷" && (str[i+1] == "0" || i+1 == str.length())) {
             throw new DivideByZeroException();
@@ -83,7 +80,11 @@ void Calculator::exprCheck()
         if (str[i] == ".") {
             bool foundDecimal = true;
             for (int j = i+1; j < str.length() && foundDecimal; j++) {
-                if (foundDecimal && (str[j] == "+" || str[j] == "-" || str[j] == "x" || str[j] == "÷" || str[j] == "√")) {
+                if (foundDecimal && (str[j] == "+" ||
+                                     str[j] == "-" ||
+                                     str[j] == "x" ||
+                                     str[j] == "÷" ||
+                                     str[j] == "√")) {
                     if (str[i+1] != str[j]) { //memastikan operator tidak langsung setelah . contoh: 25.√3
                         foundDecimal = false;
                     } else {
@@ -106,6 +107,7 @@ void Calculator::exprCheck()
 void Calculator::clearExpr()
 {
     delete expr;
+    ansPressed = false; // reset tombol ans
     expr = new TerminalExpression<QString>("");
 }
 
@@ -133,6 +135,7 @@ void Calculator::calculate()
         val.replace("√", "~");
         val.replace("²", "^");
         val.replace("÷", "/");
+
         // STRUKTUR NYA MESTI DIBENERIN LAGI
         Data x(val.toStdString());
         x.parseInput();
@@ -160,6 +163,7 @@ void Calculator::number_pressed()
 
 void Calculator::operation_pressed()
 {
+    ansPressed = false; // reset tombol ans
     clearErr();
     clearDisplayedAns();
     QPushButton* button = (QPushButton*) sender();
@@ -178,8 +182,8 @@ void Calculator::memoryOperation_pressed()
 {
     QPushButton* button = (QPushButton*) sender();
     if (button->text() == "MC") {
-        // CEK VALID GA EXPRESI NYA
-        mem.MC(new TerminalExpression<double>(expr->solve().toDouble()));
+        calculate();
+        mem.MC(new TerminalExpression<double>(ans));
     } else if (button->text() == "MR") {
         QString labelValue;
         try {
@@ -227,6 +231,11 @@ void Calculator::on_btnSum_released()
 
 void Calculator::on_btnAns_pressed()
 {
-    setExpr(expr->solve() + QString::number(ans, 'g', 10));
-    update_display();
+    if (!ansPressed) {
+        clearErr();
+        clearDisplayedAns();
+        setExpr(expr->solve() + QString::number(ans, 'g', 10));
+        update_display();
+        ansPressed = true;
+    }
 }

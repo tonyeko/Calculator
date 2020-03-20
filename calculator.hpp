@@ -17,7 +17,6 @@ public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
     void setExpr(QString);
-    void setAns(double);
     void exprCheck();
     void clearExpr();
     void clearErr();
