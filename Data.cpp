@@ -46,7 +46,7 @@ void Data::parseInput() {
                 // * Operators
                 case '+':
                     if (type == "num") inputOp(percent,value,type,"plus");
-                    else if (type == "subtract" || type == "multiply" || type=="close") type = "num";
+                    else if (type == "subtract" || type == "multiply" || type=="close" || type=="open") type = "num";
                     else throw InvalidExpressionException("add");
                     break;
                 case '-':
@@ -68,6 +68,7 @@ void Data::parseInput() {
                 case '(':
                     if (type == "num" || type == "close" || percent) {
                         inputOp(percent,value,type,"multiply");
+                        neg = false;
                     }
                     type = "open";
                     vecData.push_back(make_pair(value,type));
@@ -233,8 +234,8 @@ void Data::parseInput() {
             }
             cout << *it << endl;
         }
-        if (type == "num") vecData.push_back(make_pair(value,type));
-        else if (type == "close") {}
+        if (type == "num" || type=="close") vecData.push_back(make_pair(value,type));
+        // else if (type == "close") {}
         else throw InvalidExpressionException("end");
         cout <<  "Parsed Successfully\n";
     }
