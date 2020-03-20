@@ -9,7 +9,7 @@ using namespace std;
 class InvalidExpressionException : public BaseException {
 public:
     InvalidExpressionException(string expr) {
-        message = "NOT VALID";
+        message = expr;
     }
     string getMessage() {
         return message;

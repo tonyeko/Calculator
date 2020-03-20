@@ -18,6 +18,7 @@ public:
     ~Calculator();
     void setExpr(QString);
     void setAns(double);
+    void exprCheck();
     void clearExpr();
     void clearErr();
 
@@ -36,5 +37,6 @@ private slots:
     void on_btnDecimal_released();
     void on_btnClear_released();
     void on_btnClearExpr_released();
+    void on_btnSum_released();
 };
 #endif // CALCULATOR_HPP
