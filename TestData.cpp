@@ -8,4 +8,6 @@ int main() {
     Data test(coba);
     test.parseInput();
     test.debugData();
+    test.solve();
+    test.debugData();
 }
