@@ -38,5 +38,6 @@ private slots:
     void on_btnClear_released();
     void on_btnClearExpr_released();
     void on_btnSum_released();
+    void on_btnAns_pressed();
 };
 #endif // CALCULATOR_HPP

@@ -82,15 +82,21 @@ void Calculator::exprCheck()
         }
         if (str[i] == ".") {
             bool foundDecimal = true;
-//            qDebug() << i;
             for (int j = i+1; j < str.length() && foundDecimal; j++) {
                 if (foundDecimal && (str[j] == "+" || str[j] == "-" || str[j] == "x" || str[j] == "÷" || str[j] == "√")) {
-                    foundDecimal = false;
+                    if (str[i+1] != str[j]) { //memastikan operator tidak langsung setelah . contoh: 25.√3
+                        foundDecimal = false;
+                    } else {
+                        throw new InvalidExpressionException("DECIMAL");
+                    }
                 }
-                if (foundDecimal && (str[j] == "." || str[j] == "S" || str[j] == "C" || str[j] == "T" || str[j] == "%" || str[j] == "²")) {
-//                    qDebug() << str[j];
+                if (foundDecimal && (str[j] == "." ||
+                                     str[j] == "S" ||
+                                     str[j] == "C" ||
+                                     str[j] == "T" ||
+                                     str[j] == "%" ||
+                                     str[j] == "²")) {
                     throw new InvalidExpressionException("DECIMAL");
-                    break;
                 }
             }
         }
@@ -123,17 +129,18 @@ void Calculator::calculate()
     try {
         exprCheck();
         QString val = expr->solve();
+        // replace simbol unicode
         val.replace("√", "~");
         val.replace("²", "^");
-
+        val.replace("÷", "/");
         // STRUKTUR NYA MESTI DIBENERIN LAGI
         Data x(val.toStdString());
         x.parseInput();
-        ans = x.solve();
-        setExpr(QString::number(ans, 'g', 15));
+        ans = x.solve(); isAnswered = true;
+        setExpr(QString::number(ans, 'g', 10));
         update_display();
 
-        isAnswered = true;
+
     } catch (BaseException* exc) {
         OperationFailedException* err = new OperationFailedException(exc);
         setExpr(QString::fromStdString(err->getMessage()));
@@ -176,7 +183,7 @@ void Calculator::memoryOperation_pressed()
     } else if (button->text() == "MR") {
         QString labelValue;
         try {
-            labelValue = QString::number(mem.MR()->solve(), 'g', 15);
+            labelValue = QString::number(mem.MR()->solve(), 'g', 10);
             setExpr(labelValue);
             update_display();
         } catch (BaseException* exc) {
@@ -196,7 +203,6 @@ void Calculator::on_btnDecimal_released()
 
 void Calculator::update_display()
 {
-    qDebug() << expr->solve();
     ui->display->setText(expr->solve());
 }
 
@@ -218,3 +224,9 @@ void Calculator::on_btnSum_released()
     calculate();
 }
 
+
+void Calculator::on_btnAns_pressed()
+{
+    setExpr(expr->solve() + QString::number(ans, 'g', 10));
+    update_display();
+}
