@@ -21,13 +21,13 @@ public:
     void exprCheck();
     void clearExpr();
     void clearErr();
+    void clearDisplayedAns();
+    void calculate();
 
 private:
     Ui::Calculator *ui;
     Expression<QString>* expr;
     Memory<double> mem;
-    double ans;
-    bool isErr;
 
 private slots:
     void number_pressed();

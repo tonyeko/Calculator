@@ -9,12 +9,17 @@
 #include <string>
 #include <QtDebug>
 
+// Global variable
+double ans;
+bool isErr, isAnswered;
+
 Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calculator)
 {
     ui->setupUi(this);
     this->setFixedSize(428, 500);
     expr = new TerminalExpression<QString>("");
     isErr = false;
+    isAnswered = false;
     // Number
     connect(ui->btnNum00, SIGNAL(released()), this, SLOT(number_pressed()));
     connect(ui->btnNum0, SIGNAL(released()), this, SLOT(number_pressed()));
@@ -106,9 +111,41 @@ void Calculator::clearErr()
     }
 }
 
+void Calculator::clearDisplayedAns() {
+    if (isAnswered) {
+        clearExpr();
+        isAnswered = false;
+    }
+}
+
+void Calculator::calculate()
+{
+    try {
+        exprCheck();
+        QString val = expr->solve();
+        val.replace("√", "~");
+        val.replace("²", "^");
+
+        // STRUKTUR NYA MESTI DIBENERIN LAGI
+        Data x(val.toStdString());
+        x.parseInput();
+        ans = x.solve();
+        setExpr(QString::number(ans, 'g', 15));
+        update_display();
+
+        isAnswered = true;
+    } catch (BaseException* exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
+}
+
 void Calculator::number_pressed()
 {
     clearErr();
+    clearDisplayedAns();
     QPushButton* button = (QPushButton*) sender();
     setExpr((expr->solve() + button->text()));
     update_display();
@@ -117,6 +154,7 @@ void Calculator::number_pressed()
 void Calculator::operation_pressed()
 {
     clearErr();
+    clearDisplayedAns();
     QPushButton* button = (QPushButton*) sender();
     if (button->text() == "x²") {
         setExpr((expr->solve() + "²"));
@@ -177,21 +215,6 @@ void Calculator::on_btnClear_released()
 
 void Calculator::on_btnSum_released()
 {
-    try {
-        exprCheck();
-    } catch (BaseException* exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
-    }
-
-    QString val = expr->solve();
-    val.replace("√", "~");
-    val.replace("²", "^");
-    qDebug() << val;
-    Data x(val.toStdString());
-    qDebug() << x.solve();
-
+    calculate();
 }
 

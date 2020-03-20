@@ -2,6 +2,7 @@
     "files.associations": {
         "*.pl": "elpi",
         "vector": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "ostream": "cpp"
     }
 }
