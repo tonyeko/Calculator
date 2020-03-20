@@ -8,8 +8,8 @@ using namespace std;
 
 class InvalidExpressionException : public BaseException {
 public:
-    InvalidExpressionException(string expr) {
-        message = expr;
+    InvalidExpressionException(string errorMessage) {
+        message = errorMessage;
     }
     string getMessage() {
         return message;

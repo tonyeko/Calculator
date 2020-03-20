@@ -1,6 +1,6 @@
 #include "calculator.hpp"
 #include "ui_calculator.h"
-//#include "Expression/Expression.hpp"
+#include "Data.hpp"
 #include "Expression/TerminalExpression.hpp"
 #include "Exception/OperationFailedException.hpp"
 #include "Exception/InvalidExpressionException.hpp"
@@ -67,12 +67,27 @@ void Calculator::setAns(double exprValue)
 void Calculator::exprCheck()
 {
     QString str = expr->solve();
+    if (str.length() == 0) throw new InvalidExpressionException("EMPTY");
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == "-" && (str[i+1] == "-" || i+1 == str.length())) {
             throw new InvalidExpressionException("DOUBLE NEG");
         }
         if (str[i] == "÷" && (str[i+1] == "0" || i+1 == str.length())) {
             throw new DivideByZeroException();
+        }
+        if (str[i] == ".") {
+            bool foundDecimal = true;
+//            qDebug() << i;
+            for (int j = i+1; j < str.length() && foundDecimal; j++) {
+                if (foundDecimal && (str[j] == "+" || str[j] == "-" || str[j] == "x" || str[j] == "÷" || str[j] == "√")) {
+                    foundDecimal = false;
+                }
+                if (foundDecimal && (str[j] == "." || str[j] == "S" || str[j] == "C" || str[j] == "T" || str[j] == "%" || str[j] == "²")) {
+//                    qDebug() << str[j];
+                    throw new InvalidExpressionException("DECIMAL");
+                    break;
+                }
+            }
         }
     }
 }
@@ -170,5 +185,13 @@ void Calculator::on_btnSum_released()
         update_display();
         isErr = true;
     }
+
+    QString val = expr->solve();
+    val.replace("√", "~");
+    val.replace("²", "^");
+    qDebug() << val;
+    Data x(val.toStdString());
+    qDebug() << x.solve();
+
 }
 

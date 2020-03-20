@@ -283,7 +283,7 @@ double Data::binaryOperationHandler(double valfirst, double valsec, string op) {
     return e->solve();
 }
 
-void Data::solve() {
+double Data::solve() {
     stack<double> number; //stack to store values
     stack<string> operate; //stack to store operators
     for (int i=0; i<vecData.size(); i++) {
@@ -354,4 +354,6 @@ void Data::solve() {
     number.pop();
     vecData.clear();
     vecData.push_back(make_pair(final,"num"));
+    cout << "FINAL: " << final << endl;
+    return final;
 }
