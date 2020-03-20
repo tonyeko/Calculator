@@ -11,14 +11,13 @@ using namespace std;
 
 Data::Data(string inp) {
     input = inp;
+    string::iterator it;
+    cout << "INPUT: " << input << endl;
 }
 
-void Data::inputOp(bool &percent, double &val, string &type, string input) {
-    number.push(val);
-
-
-
+void Data::inputOp(bool &percent, bool &foundDecimal,double &val, string &type, string input) {
     percent = false;
+    foundDecimal = false;
     vecData.push_back(make_pair(val,type)); // push angka
     val = 0;
     type = input;
@@ -45,29 +44,29 @@ void Data::parseInput() {
             switch(*it) {
                 // * Operators
                 case '+':
-                    if (type == "num") inputOp(percent,value,type,"plus");
+                    if (type == "num") inputOp(percent,foundDecimal,value,type,"plus");
                     else if (type == "subtract" || type == "multiply" || type=="close") type = "num";
                     else throw InvalidExpressionException("add");
                     break;
                 case '-':
                     if (type == "subtract") throw DoubleNegationException();
-                    else if (type == "num" || type=="close") inputOp(percent,value,type,"subtract");
+                    else if (type == "num" || type=="close") inputOp(percent,foundDecimal,value,type,"subtract");
                     else {
                         type = "subtract";
                         neg = true;
                     } // throw InvalidExpressionException();
                     break;
                 case '*':
-                    if (type == "num" || type=="close") inputOp(percent,value,type,"multiply");
+                    if (type == "num" || type=="close") inputOp(percent,foundDecimal,value,type,"multiply");
                     else throw InvalidExpressionException("multiply");
                     break;
                 case '/':
-                    if (type == "num" || type=="close") inputOp(percent,value,type,"divide");
+                    if (type == "num" || type=="close") inputOp(percent,foundDecimal,value,type,"divide");
                     else throw InvalidExpressionException("divide");
                     break;
                 case '(':
                     if (type == "num" || type == "close" || percent) {
-                        inputOp(percent,value,type,"multiply");
+                        inputOp(percent,foundDecimal,value,type,"multiply");
                     }
                     type = "open";
                     vecData.push_back(make_pair(value,type));
@@ -84,7 +83,7 @@ void Data::parseInput() {
                 case '%':
                     if (type == "num") value = unaryOperationHandler(value, "%");
                     else if (type == "close") {
-                        inputOp(percent,value,type,"multiply");
+                        inputOp(percent,foundDecimal,value,type,"multiply");
                         value = 0.01;
                         type = "num";
                     } else throw InvalidExpressionException("percent");
@@ -95,7 +94,7 @@ void Data::parseInput() {
                     else {
                         foundDecimal = true;
                         if (type == "num") {
-                            inputOp(percent,value,type,"decimal");
+                            inputOp(percent,foundDecimal,value,type,"decimal");
                         } else throw InvalidExpressionException("decimal");
                         break;
                     }
@@ -106,7 +105,7 @@ void Data::parseInput() {
                 case '~': //PENGGANTI SQRT
                     it++;
                     if (value != 0) { // untuk kasus setelah angka langsung akar
-                            inputOp(percent,value,type,"multiply");
+                            inputOp(percent,foundDecimal,value,type,"multiply");
                             value = 0;
                             type = "num";
                     }

@@ -31,13 +31,12 @@ class Data {
 protected: 
     // First: value, Second:type
     vector<pair<double,string>> vecData; //isi:token
-    stack<double> number;
     string input; // to parse
 public:
     Data(string inp);
     void parseInput();
     double unaryOperationHandler(double val, string op);
-    void inputOp(bool &percent, double &val, string &type, string input);
+    void inputOp(bool &percent, bool &foundDecimal, double &val, string &type, string input);
     void debugData();
     void solve();
 };

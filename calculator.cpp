@@ -2,17 +2,9 @@
 #include "ui_calculator.h"
 //#include "Expression/Expression.hpp"
 #include "Expression/TerminalExpression.hpp"
-#include "Expression/Unary/UnaryExpression.hpp"
-#include "Expression/Binary/BinaryExpression.hpp"
-#include "Expression/Unary/NegativeExpression.hpp"
-#include "Expression/Unary/PercentExpression.hpp"
-#include "Expression/Unary/SquareExpression.hpp"
-#include "Expression/Unary/SqrtExpression.hpp"
-#include "Expression/Unary/Trigonometry/SinExpression.hpp"
-#include "Expression/Unary/Trigonometry/CosExpression.hpp"
-#include "Expression/Unary/Trigonometry/TanExpression.hpp"
 #include "Exception/OperationFailedException.hpp"
-#include "Exception/DigitLimitException.hpp"
+#include "Exception/InvalidExpressionException.hpp"
+#include "Exception/DivideByZeroException.hpp"
 
 #include <string>
 #include <QtDebug>
@@ -63,18 +55,26 @@ Calculator::~Calculator()
 
 void Calculator::setExpr(QString qStr)
 {
-    if (qStr.length() > 14) {
-        throw new DigitLimitException();
-    } else {
-        delete expr;
-        expr = new TerminalExpression<QString>(qStr);
-    }
-
+    delete expr;
+    expr = new TerminalExpression<QString>(qStr);
 }
 
 void Calculator::setAns(double exprValue)
 {
     ans = exprValue;
+}
+
+void Calculator::exprCheck()
+{
+    QString str = expr->solve();
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == "-" && (str[i+1] == "-" || i+1 == str.length())) {
+            throw new InvalidExpressionException("DOUBLE NEG");
+        }
+        if (str[i] == "÷" && (str[i+1] == "0" || i+1 == str.length())) {
+            throw new DivideByZeroException();
+        }
+    }
 }
 
 void Calculator::clearExpr()
@@ -95,37 +95,23 @@ void Calculator::number_pressed()
 {
     clearErr();
     QPushButton* button = (QPushButton*) sender();
-    try {
-        setExpr((expr->solve() + button->text()));
-        update_display();
-    } catch (BaseException * exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
-    }
+    setExpr((expr->solve() + button->text()));
+    update_display();
 }
 
 void Calculator::operation_pressed()
 {
     clearErr();
     QPushButton* button = (QPushButton*) sender();
-    try {
-        if (button->text() == "x²") {
-            setExpr((expr->solve() + "²"));
-        } else {
-            setExpr((expr->solve() + button->text()));
-            if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
-                setExpr(expr->solve() + "(");
-            }
+    if (button->text() == "x²") {
+        setExpr((expr->solve() + "²"));
+    } else {
+        setExpr((expr->solve() + button->text()));
+        if (button->text() == "SIN" || button->text() == "COS" || button->text() == "TAN") {
+            setExpr(expr->solve() + "(");
         }
-        update_display();
-    } catch (BaseException * exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
     }
+    update_display();
 }
 
 void Calculator::memoryOperation_pressed()
@@ -151,15 +137,8 @@ void Calculator::memoryOperation_pressed()
 
 void Calculator::on_btnDecimal_released()
 {
-    try {
-        setExpr(expr->solve() + ".");
-        update_display();
-    } catch (BaseException * exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
-    }
+    setExpr(expr->solve() + ".");
+    update_display();
 }
 
 void Calculator::update_display()
@@ -180,3 +159,16 @@ void Calculator::on_btnClear_released()
     mem.clear();
     update_display();
 }
+
+void Calculator::on_btnSum_released()
+{
+    try {
+        exprCheck();
+    } catch (BaseException* exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
+    }
+}
+
