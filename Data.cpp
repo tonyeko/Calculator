@@ -12,6 +12,8 @@ using namespace std;
 
 Data::Data(string inp) {
     input = inp;
+    string::iterator it;
+    cout << "INPUT: " << input << endl;
 }
 
 void Data::inputOp(bool &percent, bool &foundDecimal,double &val, string &type, string input) {
