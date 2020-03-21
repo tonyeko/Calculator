@@ -61,12 +61,12 @@ void Data::parseInput() {
                     if (type == "num" || type=="close") inputOp(percent,foundDec,value,type,"multiply");
                     else throw new InvalidExpressionException("MULTIPLY");
                     break;
-                case '/':
+                case '/': // divide by 0 dihandle solve
                     if (type == "num" || type=="close") inputOp(percent,foundDec,value,type,"divide");
                     else throw new InvalidExpressionException("DIVIDE");
                     break;
                 case '(':
-                    if (type == "num" || type == "close" || percent) {
+                    if (type == "num" || type == "close" || percent) { // kasus buka stlh nilai
                         inputOp(percent,foundDec,value,type,"multiply");
                         neg = true;
                     }
@@ -74,17 +74,17 @@ void Data::parseInput() {
                     vecData.push_back(make_pair(value,type));
                     break;
                 case ')':
-                    if (type == "open") throw new EmptyParenthesesException();
-                    else if (type == "close" || type == "num") {
+                    if (type == "open") throw new EmptyParenthesesException(); // kasus open langsung close
+                    else if (type == "close" || type == "num") { // kasus jika tidak ada operator stlh num / close
                         percent = false;
                         vecData.push_back(make_pair(value,type));
                         value = 0;
                         type = "close";
-                    } else throw new InvalidExpressionException("CLOSE PAR");
+                    } else throw new InvalidExpressionException("CLOSE PAR"); // kasus op langsung tutup
                     break;
                 case '%':
                     if (type == "num") value = unaryOperationHandler(value, "%");
-                    else if (type == "close") {
+                    else if (type == "close") { // Kasus persen langsung stlh akar
                         inputOp(percent,foundDec,value,type,"multiply");
                         value = 0.01;
                         type = "num";
@@ -101,7 +101,12 @@ void Data::parseInput() {
                         break;
                     }
                 case '^': //PENGGANTI KUADRAT
-                    if (type == "num") value = unaryOperationHandler(value, "^");
+                    if (type == "num") {
+                        value = unaryOperationHandler(value, "^");
+                        if (*(it+1) >= 48 && *(it+1) <= 57) { 
+                            throw new InvalidExpressionException("SQUARE");
+                        }
+                    }
                     else throw new InvalidExpressionException("SQUARE");
                     break;
                 case '~': //PENGGANTI SQRT
@@ -152,7 +157,7 @@ void Data::parseInput() {
                 case 'S':
                     it+=4;
                     num = 0; numneg = false;
-                    if (*it > 57 || *it < 48) {
+                    if (*it < 48 || *it > 57) {
                         throw new InvalidExpressionException("SIN");
                     }
                     while (*it != ')' && it != input.end()) {
@@ -228,7 +233,7 @@ void Data::parseInput() {
                     if (it == input.end()) {
                         throw new InvalidExpressionException("CLOSE PAR");
                     } else {
-                        if (*(it+1) > 57 || *(it+1) < 48) { 
+                        if (*(it+1) < 48 || *(it+1) > 57) { 
                             value = unaryOperationHandler(num, "TAN");
                             type = "num";
                         } else { //setelah sin langsung angka, contoh: TAN(2)2
