@@ -137,7 +137,7 @@ void Data::parseInput() {
                         if (*it > 57 || *it < 48) { // setelah SQRT bukan angka
                             throw new InvalidExpressionException("SQRT");
                         } else {
-                            while ( ((double) (*it) - 48) >= 0 &&  ((double) (*it) - 48) <= 9 && it != input.end()) {
+                            while (*it >= 48 &&  *it <= 57 && it != input.end()) {
                                 cout << ((double) (*it) - 48) << "AAAA" << endl;
                                 if (*it == '-') {
                                     throw new NegativeSqrtException();
@@ -146,9 +146,7 @@ void Data::parseInput() {
                                 it++;
                                 // cout << num << endl;
                             } 
-                            if (it == input.end()) {
-                                it--;
-                            }
+                            it--;
                             value = unaryOperationHandler(num, "~");
                             type = "num";
                         }

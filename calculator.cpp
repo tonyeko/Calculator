@@ -75,8 +75,13 @@ void Calculator::exprCheck()
         if (str[i] == "-" && (str[i+1] == "-" || i+1 == str.length())) {
             throw new InvalidExpressionException("DBL NEG");
         }
-        if (str[i] == "÷" && (str[i+1] == "0" || i+1 == str.length())) {
-            throw new DivideByZeroException();
+        if (str[i] == "÷") {
+            if (str[i+1] == "0") {
+                throw new DivideByZeroException();
+            } else if (i+1 == str.length()) {
+                throw new InvalidExpressionException("EMPTY DIV");
+            }
+
         }
         if (str[i] == ".") {
             bool foundDecimal = true;
