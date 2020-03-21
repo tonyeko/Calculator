@@ -16,6 +16,7 @@ bool isErr, isAnswered, ansPressed;
 Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calculator)
 {
     ui->setupUi(this);
+
     this->setFixedSize(428, 500);
     expr = new TerminalExpression<QString>("");
     isErr = false;
@@ -84,6 +85,7 @@ void Calculator::exprCheck()
                                      str[j] == "-" ||
                                      str[j] == "x" ||
                                      str[j] == "÷" ||
+                                     str[j] == "%" ||
                                      str[j] == "√")) {
                     if (str[i+1] != str[j]) { //memastikan operator tidak langsung setelah . contoh: 25.√3
                         foundDecimal = false;
@@ -95,7 +97,6 @@ void Calculator::exprCheck()
                                      str[j] == "S" ||
                                      str[j] == "C" ||
                                      str[j] == "T" ||
-                                     str[j] == "%" ||
                                      str[j] == "²")) {
                     throw new InvalidExpressionException("DECIMAL");
                 }

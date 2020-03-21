@@ -92,12 +92,12 @@ void Data::parseInput() {
                     percent = true;
                     break;
                 case '.':
-                    if (foundDec) throw new InvalidExpressionException("DECIMAL");
+                    if (foundDec) throw new InvalidExpressionException("DES");
                     else {
                         foundDec = true;
                         if (type == "num") {
                             inputOp(percent,foundDec,value,type,"decimal");
-                        } else throw new InvalidExpressionException("DECIMAL");
+                        } else throw new InvalidExpressionException("DES");
                         break;
                     }
                 case '^': //PENGGANTI KUADRAT
