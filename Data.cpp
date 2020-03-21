@@ -45,8 +45,8 @@ void Data::parseInput() {
             switch(*it) {
                 // * Operators
                 case '+':
-                    if (type == "num") inputOp(percent,value,type,"plus");
-                    else if (type == "subtract" || type == "multiply" || type=="close" || type=="open") type = "num";
+                    if (type == "num" || type == "percent" || type == "close" || type == "square") inputOp(percent,value,type,"plus");
+                    else if (type == "subtract" || type == "multiply" || type=="open") type = "num";
                     else throw new InvalidExpressionException("ADD");
                     break;
                 case '-':
@@ -236,7 +236,15 @@ double Data::solve() {
     stack<string> operate; //stack to store operators
     for (int i=0; i<vecData.size(); i++) {
         if (vecData[i].second == "num") {
-            number.push(vecData[i].first);
+            if (operate.size() > 0 && operate.top() == "sqrt") {
+                string sqrt = operate.top();
+                operate.pop();
+                double res = unaryOperationHandler(vecData[i].first,sqrt);
+                number.push(res);
+            }
+            else {
+                number.push(vecData[i].first);
+            }
     }
         else if (vecData[i].second == "percent" || vecData[i].second == "square") {
             double num = number.top();
@@ -244,7 +252,7 @@ double Data::solve() {
             double res = unaryOperationHandler(num, vecData[i].second);
             number.push(res);
         }
-        else if (vecData[i].second == "open" || vecData[i].second == "sin" || vecData[i].second == "tan" || vecData[i].second == "cos") {
+        else if (vecData[i].second == "open" || vecData[i].second == "sin" || vecData[i].second == "tan" || vecData[i].second == "cos" || vecData[i].second == "sqrt") {
             operate.push(vecData[i].second);
         }
         else if (vecData[i].second == "close") {
@@ -259,7 +267,7 @@ double Data::solve() {
                 number.push(result);
             }
             operate.pop();
-            if (operate.top() == "sqrt" || operate.top() == "sin" || operate.top() == "cos" || operate.top() == "tan") {
+            if ((operate.size() > 0) && (operate.top() == "sqrt" || operate.top() == "sin" || operate.top() == "cos" || operate.top() == "tan")) {
                 string operater = operate.top();
                 operate.pop();
                 double val = number.top();
