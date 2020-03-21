@@ -41,7 +41,7 @@ public:
     void parseInput();
     double unaryOperationHandler(double val, string op);
     double binaryOperationHandler(double valfirst, double valsec, string op);
-    void inputOp(bool &percent, bool &foundDecimal,double &val, string &type, string input);
+    void inputOp(bool &percent,double &val, string &type, string input);
     void debugData();
     double solve();
 };
