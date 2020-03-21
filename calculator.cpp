@@ -65,6 +65,8 @@ void Calculator::setExpr(QString qStr)
 
 void Calculator::exprCheck()
 {
+    int countOpenPar = 0;
+    int countClosePar = 0;
     QString str = expr->solve();
     if (isErr) throw new InvalidExpressionException("ERR EXPR");
     if (str.length() == 0) throw new InvalidExpressionException("EMPTY");
@@ -104,7 +106,15 @@ void Calculator::exprCheck()
                 }
             }
         }
+        if (str[i] == "(") {
+            countOpenPar++;
+        }
+        if (str[i] == ")") {
+            countClosePar++;
+        }
     }
+    if (countOpenPar > countClosePar) throw new InvalidExpressionException("CLOSE PAR");
+    else if (countOpenPar < countClosePar) throw new InvalidExpressionException("OPEN PAR");
 }
 
 void Calculator::clearExpr()

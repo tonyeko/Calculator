@@ -68,7 +68,7 @@ void Data::parseInput() {
                 case '(':
                     if (type == "num" || type == "close" || percent) { // kasus buka stlh nilai
                         inputOp(percent,value,type,"multiply");
-                        neg = true;
+                        neg = false;
                     }
                     type = "open";
                     vecData.push_back(make_pair(value,type));
