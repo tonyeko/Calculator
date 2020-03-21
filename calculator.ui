@@ -517,6 +517,9 @@
     <property name="text">
      <string>C</string>
     </property>
+    <property name="shortcut">
+     <string>Backspace</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnClearExpr">
     <property name="geometry">
@@ -538,6 +541,9 @@
     </property>
     <property name="text">
      <string>CE</string>
+    </property>
+    <property name="shortcut">
+     <string>Ctrl+Backspace</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSquare">
@@ -561,6 +567,9 @@
     <property name="text">
      <string>x²</string>
     </property>
+    <property name="shortcut">
+     <string>^</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnDiv">
     <property name="geometry">
@@ -582,6 +591,9 @@
     </property>
     <property name="text">
      <string>÷</string>
+    </property>
+    <property name="shortcut">
+     <string>/</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnNum9">
@@ -606,6 +618,9 @@
 color: #ffffff;</string>
     </property>
     <property name="text">
+     <string>9</string>
+    </property>
+    <property name="shortcut">
      <string>9</string>
     </property>
    </widget>
@@ -633,6 +648,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>7</string>
     </property>
+    <property name="shortcut">
+     <string>7</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnNum8">
     <property name="geometry">
@@ -658,6 +676,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>8</string>
     </property>
+    <property name="shortcut">
+     <string>8</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnMultiply">
     <property name="geometry">
@@ -679,6 +700,9 @@ color: #ffffff;</string>
     </property>
     <property name="text">
      <string>x</string>
+    </property>
+    <property name="shortcut">
+     <string>*</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnNum6">
@@ -703,6 +727,9 @@ color: #ffffff;</string>
 color: #ffffff;</string>
     </property>
     <property name="text">
+     <string>6</string>
+    </property>
+    <property name="shortcut">
      <string>6</string>
     </property>
    </widget>
@@ -730,6 +757,9 @@ color: #ffffff;background-color: rgb(184, 13, 87);</string>
     <property name="text">
      <string>4</string>
     </property>
+    <property name="shortcut">
+     <string>4</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnNum5">
     <property name="geometry">
@@ -753,6 +783,9 @@ color: #ffffff;background-color: rgb(184, 13, 87);</string>
 color: #ffffff;</string>
     </property>
     <property name="text">
+     <string>5</string>
+    </property>
+    <property name="shortcut">
      <string>5</string>
     </property>
    </widget>
@@ -780,6 +813,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>1</string>
     </property>
+    <property name="shortcut">
+     <string>1</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnNum2">
     <property name="geometry">
@@ -803,6 +839,9 @@ color: #ffffff;</string>
 color: #ffffff;</string>
     </property>
     <property name="text">
+     <string>2</string>
+    </property>
+    <property name="shortcut">
      <string>2</string>
     </property>
    </widget>
@@ -830,6 +869,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>3</string>
     </property>
+    <property name="shortcut">
+     <string>3</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnSub">
     <property name="geometry">
@@ -850,6 +892,9 @@ color: #ffffff;</string>
      <string notr="true">background-color: rgb(248, 97, 90);</string>
     </property>
     <property name="text">
+     <string>-</string>
+    </property>
+    <property name="shortcut">
      <string>-</string>
     </property>
    </widget>
@@ -873,6 +918,9 @@ color: #ffffff;</string>
     </property>
     <property name="text">
      <string>=</string>
+    </property>
+    <property name="shortcut">
+     <string>Return</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnNum00">
@@ -924,6 +972,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>0</string>
     </property>
+    <property name="shortcut">
+     <string>0</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnPercent">
     <property name="geometry">
@@ -944,6 +995,9 @@ color: #ffffff;</string>
      <string notr="true">background-color: rgb(248, 97, 90);</string>
     </property>
     <property name="text">
+     <string>%</string>
+    </property>
+    <property name="shortcut">
      <string>%</string>
     </property>
    </widget>
@@ -971,6 +1025,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>.</string>
     </property>
+    <property name="shortcut">
+     <string>.</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnMC">
     <property name="geometry">
@@ -993,6 +1050,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>MC</string>
     </property>
+    <property name="shortcut">
+     <string>S</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnMR">
     <property name="geometry">
@@ -1014,6 +1074,9 @@ color: #ffffff;</string>
     </property>
     <property name="text">
      <string>MR</string>
+    </property>
+    <property name="shortcut">
+     <string>R</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSin">
@@ -1041,6 +1104,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>SIN</string>
     </property>
+    <property name="shortcut">
+     <string>F1</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnCos">
     <property name="geometry">
@@ -1062,6 +1128,9 @@ color: #ffffff;</string>
     </property>
     <property name="text">
      <string>COS</string>
+    </property>
+    <property name="shortcut">
+     <string>F3</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnTan">
@@ -1085,6 +1154,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>TAN</string>
     </property>
+    <property name="shortcut">
+     <string>F2</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnSqrt">
     <property name="geometry">
@@ -1107,6 +1179,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>√</string>
     </property>
+    <property name="shortcut">
+     <string>~</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnOpen">
     <property name="geometry">
@@ -1127,6 +1202,9 @@ color: #ffffff;</string>
      <string notr="true">background-color: rgb(248, 97, 90);</string>
     </property>
     <property name="text">
+     <string>(</string>
+    </property>
+    <property name="shortcut">
      <string>(</string>
     </property>
    </widget>
@@ -1151,6 +1229,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>ANS</string>
     </property>
+    <property name="shortcut">
+     <string>F4</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnClose">
     <property name="geometry">
@@ -1173,6 +1254,9 @@ color: #ffffff;</string>
     <property name="text">
      <string>)</string>
     </property>
+    <property name="shortcut">
+     <string>)</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnAdd">
     <property name="geometry">
@@ -1193,6 +1277,9 @@ color: #ffffff;</string>
      <string notr="true">background-color: rgb(248, 97, 90);</string>
     </property>
     <property name="text">
+     <string>+</string>
+    </property>
+    <property name="shortcut">
      <string>+</string>
     </property>
    </widget>
