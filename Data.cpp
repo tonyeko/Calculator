@@ -83,12 +83,12 @@ void Data::parseInput() {
                     } else throw new InvalidExpressionException("CLOSE PAR"); // kasus op langsung tutup
                     break;
                 case '%':
-                    if (type == "num") value = unaryOperationHandler(value, "%");
-                    else if (type == "close") { // Kasus persen langsung stlh akar
-                        inputOp(percent,value,type,"multiply");
-                        value = 0.01;
-                        type = "num";
-                    } else throw new InvalidExpressionException("PERCENT");
+                    if (type == "num" || type=="close") {
+                        vecData.push_back(make_pair(value,type));
+                        value = 0;
+                        type = "percent";
+                    }
+                    else throw new InvalidExpressionException("PERCENT");
                     percent = true;
                     break;
                 case '.':
@@ -108,142 +108,49 @@ void Data::parseInput() {
                     }
                     break;
                 case '^': //PENGGANTI KUADRAT
-                    if (type == "num") {
-                        if (*(it+1) >= 48 && *(it+1) <= 57) { 
+                    if (type == "close" || type == "num") {
+                        vecData.push_back(make_pair(value,type));
+                        value = 0;
+                        type = "square";
+                    }
+                    else if (*(it+1) >= 48 && *(it+1) <= 57) { 
                             throw new InvalidExpressionException("SQUARE");
-                        }
-                        value = unaryOperationHandler(value, "^");
                     }
                     else throw new InvalidExpressionException("SQUARE");
                     break;
                 case '~': //PENGGANTI SQRT
-                    it++;
-                    if (value != 0) { // untuk kasus setelah angka langsung akar
-                        inputOp(percent,value,type,"multiply");
-                        value = 0;
-                        type = "num";
+                    if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") { // untuk kasus setelah akar langsung angka??
+                        vecData.push_back(make_pair(0,"sqrt"));
                     }
-                    if (*it == '(') {
-                        it++;
-                        num = 0;
-                        while (*it != ')' && it != input.end()) {
-                            // cout << ((double) (*it) - 48) << "AAAA" << endl;
-                            if (*it == '-') {
-                                throw new NegativeSqrtException();
-                            }
-                            num = num*10 + ((double) (*it) - 48);
-                            it++;
-                        }
-                        if (it == input.end()) {
-                            throw new InvalidExpressionException("CLOSE PAR");
-                        } else {
-                            value = unaryOperationHandler(num, "~");
-                            type = "num";
-                        }
-                    } else {
-                        if (*it > 57 || *it < 48) { // setelah SQRT bukan angka
-                            throw new InvalidExpressionException("SQRT");
-                        } else {
-                            while (*it >= 48 &&  *it <= 57 && it != input.end()) {
-                                cout << ((double) (*it) - 48) << "AAAA" << endl;
-                                if (*it == '-') {
-                                    throw new NegativeSqrtException();
-                                }
-                                num = num*10 + ((double) (*it) - 48);
-                                it++;
-                                // cout << num << endl;
-                            } 
-                            it--;
-                            value = unaryOperationHandler(num, "~");
-                            type = "num";
-                        }
+                    else {
+                        throw InvalidExpressionException("SQRT");
                     }
                     break;
                 case 'S':
-                    it+=4;
-                    num = 0; numneg = false;
-                    if (*it < 48 || *it > 57) {
-                        throw new InvalidExpressionException("SIN");
+                    it+=2;
+                    if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") {
+                        vecData.push_back(make_pair(0,"sin"));
                     }
-                    while (*it != ')' && it != input.end()) {
-                        if (*it == '-') {
-                            numneg = true;
-                            *it++;
-                        }
-                        if (numneg) {
-                            value = value*10 - ((double) (*it) - 48);
-                        } else {
-                            num = num*10 + ((double) (*it) - 48); 
-                        }
-                        it++;
-                    }
-                    if (it == input.end()) {
-                        throw new InvalidExpressionException("CLOSE PAR");
-                    } else {
-                        if (*(it+1) > 57 || *(it+1) < 48) { 
-                            value = unaryOperationHandler(num, "SIN");
-                            type = "num";
-                        } else { //setelah sin langsung angka, contoh: SIN(2)2
-                            throw new InvalidExpressionException("SIN");
-                        }
+                    else {
+                        throw InvalidExpressionException("SIN");
                     }
                     break;
                 case 'C':
-                    it+=4;
-                    if (*it > 57 || *it < 48) {
-                        throw new InvalidExpressionException("COS");
+                    it+=2;
+                    if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") {
+                        vecData.push_back(make_pair(0,"cos"));
                     }
-                    num = 0; numneg = false;
-                    while (*it != ')' && it != input.end()) {
-                        if (*it == '-') {
-                            numneg = true;
-                            *it++;
-                        }
-                        if (numneg) {
-                            value = value*10 - ((double) (*it) - 48);
-                        } else {
-                            num = num*10 + ((double) (*it) - 48); 
-                        }
-                        it++;
-                    }
-                    if (it == input.end()) {
-                        throw new InvalidExpressionException("CLOSE PAR");
-                    } else {
-                        if (*(it+1) > 57 || *(it+1) < 48) { 
-                            value = unaryOperationHandler(num, "COS");
-                            type = "num";
-                        } else { //setelah sin langsung angka, contoh: COS(2)2
-                            throw new InvalidExpressionException("COS");
-                        }
+                    else {
+                        throw InvalidExpressionException("COS");
                     }
                     break;
                 case 'T':
-                    it+=4;
-                    if (*it > 57 || *it < 48) {
-                        throw new InvalidExpressionException("TAN");
+                    it+=2;
+                    if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") {
+                        vecData.push_back(make_pair(0,"tan"));
                     }
-                    num = 0; numneg = false;
-                    while (*it != ')' && it != input.end()) {
-                        if (*it == '-') {
-                            numneg = true;
-                            *it++;
-                        }
-                        if (numneg) {
-                            value = value*10 - ((double) (*it) - 48);
-                        } else {
-                            num = num*10 + ((double) (*it) - 48); 
-                        }
-                        it++;
-                    }
-                    if (it == input.end()) {
-                        throw new InvalidExpressionException("CLOSE PAR");
-                    } else {
-                        if (*(it+1) < 48 || *(it+1) > 57) { 
-                            value = unaryOperationHandler(num, "TAN");
-                            type = "num";
-                        } else { //setelah sin langsung angka, contoh: TAN(2)2
-                            throw new InvalidExpressionException("TAN");
-                        }
+                    else {
+                        throw InvalidExpressionException("TAN");
                     }
                     break;
                 // *Numbers
@@ -277,7 +184,7 @@ void Data::parseInput() {
             }
             cout << *it << endl;
         }
-        if (type == "num" || type=="close") vecData.push_back(make_pair(value,type));
+        if (type == "num" || type=="close" || type=="square" || type=="percent") vecData.push_back(make_pair(value,type));
         // else if (type == "close") {}
         else throw new InvalidExpressionException("END");
         cout <<  "Parsed Successfully\n";
@@ -294,17 +201,17 @@ double Data::unaryOperationHandler(double val, string op) {
     Expression<double>* e;
     if (op == "-") {
         e = new NegativeExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "%") {
+    } else if (op == "percent") {
         e = new PercentExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "~") { // pengganti sqrt
+    } else if (op == "sqrt") { // pengganti sqrt
         e = new SqrtExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "^") { //pengganti kuadrat
+    } else if (op == "square") { //pengganti kuadrat
         e = new SquareExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "SIN") {
+    } else if (op == "sin") {
         e = new SinExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "COS") {
+    } else if (op == "cos") {
         e = new CosExpression<double>(new TerminalExpression<double>(val));
-    } else if (op == "TAN") {
+    } else if (op == "tan") {
         e = new TanExpression<double>(new TerminalExpression<double>(val));
     }
     return e->solve();
@@ -312,13 +219,10 @@ double Data::unaryOperationHandler(double val, string op) {
 
 double Data::binaryOperationHandler(double valfirst, double valsec, string op) {
     Expression<double>* e;
-    int length = to_string(int(valsec)).length();
     if (op == "plus") {
         e = new AddExpression<double>(new TerminalExpression<double>(valfirst), new TerminalExpression<double>(valsec));
     } else if (op == "subtract") {
         e = new SubtractExpression<double>(new TerminalExpression<double>(valfirst), new TerminalExpression<double>(valsec));
-    } else if (op == "decimal") {
-        e = new DecimalExpression<double>(new TerminalExpression<double>(valfirst), new TerminalExpression<double>(valsec), length);
     } else if (op == "divide") {
         e = new DivisionExpression<double>(new TerminalExpression<double>(valfirst), new TerminalExpression<double>(valsec));
     } else if (op == "multiply") {
@@ -333,8 +237,14 @@ double Data::solve() {
     for (int i=0; i<vecData.size(); i++) {
         if (vecData[i].second == "num") {
             number.push(vecData[i].first);
+    }
+        else if (vecData[i].second == "percent" || vecData[i].second == "square") {
+            double num = number.top();
+            number.pop();
+            double res = unaryOperationHandler(num, vecData[i].second);
+            number.push(res);
         }
-        else if (vecData[i].second == "open") {
+        else if (vecData[i].second == "open" || vecData[i].second == "sin" || vecData[i].second == "tan" || vecData[i].second == "cos") {
             operate.push(vecData[i].second);
         }
         else if (vecData[i].second == "close") {
@@ -348,7 +258,15 @@ double Data::solve() {
                 double result = binaryOperationHandler(operandone, operandtwo, operater);
                 number.push(result);
             }
+            operate.pop();
+            if (operate.top() == "sqrt" || operate.top() == "sin" || operate.top() == "cos" || operate.top() == "tan") {
+                string operater = operate.top();
                 operate.pop();
+                double val = number.top();
+                number.pop();
+                double res = unaryOperationHandler(val, operater);
+                number.push(res);
+                }
         } else if ((vecData[i].second == "plus") || (vecData[i].second == "subtract")) {
             while ((operate.size() > 0) && (operate.top() != "open")) {
                 string operater = operate.top();
@@ -361,8 +279,7 @@ double Data::solve() {
                 number.push(result);
             }
             operate.push(vecData[i].second);
-        }
-        else if ((vecData[i].second == "multiply") || (vecData[i].second == "divide")) {
+        } else if ((vecData[i].second == "multiply") || (vecData[i].second == "divide")) {
             while ((operate.size() > 0) && (operate.top() != "plus") && (operate.top() != "subtract") && (operate.top() != "open")) {
                 string operater = operate.top();
                 operate.pop();
@@ -378,9 +295,6 @@ double Data::solve() {
                     number.push(result);
                 }
             }
-            operate.push(vecData[i].second);
-        }
-        else if (vecData[i].second == "decimal") {
             operate.push(vecData[i].second);
         }
     }
