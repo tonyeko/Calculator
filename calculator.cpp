@@ -145,9 +145,14 @@ void Calculator::calculate()
         // STRUKTUR NYA MESTI DIBENERIN LAGI
         Data x(val.toStdString());
         x.parseInput();
-        ans = x.solve(); isAnswered = true;
-        setExpr(QString::number(ans, 'g', 10));
-        update_display();
+        if (x.solve() == numeric_limits<double>::infinity()) {
+            throw new DivideByZeroException();
+        } else {
+            ans = x.solve(); isAnswered = true;
+            setExpr(QString::number(ans, 'g', 10));
+            update_display();
+        }
+
 
 
     } catch (BaseException* exc) {
