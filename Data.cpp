@@ -35,6 +35,8 @@ void Data::parseInput() {
         bool neg = false;
         bool percent = false;
         double value = 0;
+        double dec = 0.0;
+        double decCount = 10;
         //untuk unary 
         double num;
         bool numneg;
@@ -92,14 +94,25 @@ void Data::parseInput() {
                     percent = true;
                     break;
                 case '.':
-                    if (foundDec) throw new InvalidExpressionException("DECIMAL");
-                    else {
-                        foundDec = true;
-                        if (type == "num") {
-                            inputOp(percent,foundDec,value,type,"decimal");
-                        } else throw new InvalidExpressionException("DECIMAL");
-                        break;
+                    it++;
+                    while (48 <= *it && *it <= 57) {
+                        cout << "NOW " << (double) (*it);
+                        cout << " |||\n";
+                        dec += ((double) (*it) - 48.00) / decCount;
+                        decCount *= 10;
+                        it++;
+                        cout << "DEC = " << dec << endl;
+                        cout << "DECCOUNT = " << decCount << endl;
                     }
+                    it--;
+                    if (decCount == 0.1 || *it+1 == '.') throw InvalidExpressionException("DECIMAL");
+                    else {
+                        type = "num";
+                        value += dec;
+                        dec = 0.0;
+                        decCount = 10;
+                    }
+                    break;
                 case '^': //PENGGANTI KUADRAT
                     if (type == "num") {
                         value = unaryOperationHandler(value, "^");
