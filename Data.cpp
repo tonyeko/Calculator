@@ -109,10 +109,10 @@ void Data::parseInput() {
                     break;
                 case '^': //PENGGANTI KUADRAT
                     if (type == "num") {
-                        value = unaryOperationHandler(value, "^");
                         if (*(it+1) >= 48 && *(it+1) <= 57) { 
                             throw new InvalidExpressionException("SQUARE");
                         }
+                        value = unaryOperationHandler(value, "^");
                     }
                     else throw new InvalidExpressionException("SQUARE");
                     break;

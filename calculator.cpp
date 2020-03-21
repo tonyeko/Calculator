@@ -143,15 +143,13 @@ void Calculator::calculate()
         Data x(val.toStdString());
         x.parseInput();
         if (x.solve() == numeric_limits<double>::infinity()) {
+            ans = 0; isAnswered = false;
             throw new DivideByZeroException();
         } else {
             ans = x.solve(); isAnswered = true;
             setExpr(QString::number(ans, 'g', 10));
             update_display();
         }
-
-
-
     } catch (BaseException* exc) {
         OperationFailedException* err = new OperationFailedException(exc);
         setExpr(QString::fromStdString(err->getMessage()));
@@ -230,7 +228,9 @@ void Calculator::on_btnAns_pressed()
 void Calculator::on_btnMC_released()
 {
     calculate();
-    mem.MC(new TerminalExpression<double>(ans));
+    if (!isErr) {
+        mem.MC(new TerminalExpression<double>(ans));
+    }
 }
 
 
@@ -239,7 +239,7 @@ void Calculator::on_btnMR_released()
     QString labelValue;
     try {
         labelValue = QString::number(mem.MR()->solve(), 'g', 10);
-        setExpr(expr->solve()+labelValue);
+        setExpr(labelValue);
         update_display();
         isAnswered = false;
     } catch (BaseException* exc) {

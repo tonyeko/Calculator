@@ -17,7 +17,7 @@ class Memory {
 		}
 		Expression<T>* MR() {
     		if (data.empty()) {
-                throw new EmptyMemoryException;
+                throw new EmptyMemoryException();
     		}
     		Expression<T>* x = data.front();
     		data.pop();
