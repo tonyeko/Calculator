@@ -94,6 +94,7 @@ void Data::parseInput() {
                     percent = true;
                     break;
                 case '.':
+<<<<<<< HEAD
                     it++;
                     while (48 <= *it && *it <= 57) {
                         cout << "NOW " << (double) (*it);
@@ -111,6 +112,15 @@ void Data::parseInput() {
                         value += dec;
                         dec = 0.0;
                         decCount = 10;
+=======
+                    if (foundDec) throw new InvalidExpressionException("DES");
+                    else {
+                        foundDec = true;
+                        if (type == "num") {
+                            inputOp(percent,foundDec,value,type,"decimal");
+                        } else throw new InvalidExpressionException("DES");
+                        break;
+>>>>>>> 11d583e508cfa66ebb38d2160c3fc6bdc3bc6d7d
                     }
                     break;
                 case '^': //PENGGANTI KUADRAT
@@ -150,7 +160,7 @@ void Data::parseInput() {
                         if (*it > 57 || *it < 48) { // setelah SQRT bukan angka
                             throw new InvalidExpressionException("SQRT");
                         } else {
-                            while ( ((double) (*it) - 48) >= 0 &&  ((double) (*it) - 48) <= 9 && it != input.end()) {
+                            while (*it >= 48 &&  *it <= 57 && it != input.end()) {
                                 cout << ((double) (*it) - 48) << "AAAA" << endl;
                                 if (*it == '-') {
                                     throw new NegativeSqrtException();
@@ -159,9 +169,7 @@ void Data::parseInput() {
                                 it++;
                                 // cout << num << endl;
                             } 
-                            if (it == input.end()) {
-                                it--;
-                            }
+                            it--;
                             value = unaryOperationHandler(num, "~");
                             type = "num";
                         }

@@ -16,6 +16,7 @@ bool isErr, isAnswered, ansPressed;
 Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calculator)
 {
     ui->setupUi(this);
+
     this->setFixedSize(428, 500);
     expr = new TerminalExpression<QString>("");
     isErr = false;
@@ -74,8 +75,13 @@ void Calculator::exprCheck()
         if (str[i] == "-" && (str[i+1] == "-" || i+1 == str.length())) {
             throw new InvalidExpressionException("DBL NEG");
         }
-        if (str[i] == "÷" && (str[i+1] == "0" || i+1 == str.length())) {
-            throw new DivideByZeroException();
+        if (str[i] == "÷") {
+            if (str[i+1] == "0") {
+                throw new DivideByZeroException();
+            } else if (i+1 == str.length()) {
+                throw new InvalidExpressionException("EMPTY DIV");
+            }
+
         }
         if (str[i] == ".") {
             bool foundDecimal = true;
@@ -84,6 +90,7 @@ void Calculator::exprCheck()
                                      str[j] == "-" ||
                                      str[j] == "x" ||
                                      str[j] == "÷" ||
+                                     str[j] == "%" ||
                                      str[j] == "√")) {
                     if (str[i+1] != str[j]) { //memastikan operator tidak langsung setelah . contoh: 25.√3
                         foundDecimal = false;
@@ -95,7 +102,6 @@ void Calculator::exprCheck()
                                      str[j] == "S" ||
                                      str[j] == "C" ||
                                      str[j] == "T" ||
-                                     str[j] == "%" ||
                                      str[j] == "²")) {
                     throw new InvalidExpressionException("DECIMAL");
                 }
@@ -139,9 +145,14 @@ void Calculator::calculate()
         // STRUKTUR NYA MESTI DIBENERIN LAGI
         Data x(val.toStdString());
         x.parseInput();
-        ans = x.solve(); isAnswered = true;
-        setExpr(QString::number(ans, 'g', 10));
-        update_display();
+        if (x.solve() == numeric_limits<double>::infinity()) {
+            throw new DivideByZeroException();
+        } else {
+            ans = x.solve(); isAnswered = true;
+            setExpr(QString::number(ans, 'g', 10));
+            update_display();
+        }
+
 
 
     } catch (BaseException* exc) {
