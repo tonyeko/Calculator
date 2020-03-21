@@ -51,18 +51,18 @@ void Data::parseInput() {
                     break;
                 case '-':
                     if (type == "subtract") throw new DoubleNegationException();
-                    else if (type == "num" || type=="close") inputOp(percent,value,type,"subtract");
+                    else if (type == "num" || type=="close" || type=="percent" || type=="square") inputOp(percent,value,type,"subtract");
                     else {
                         type = "subtract";
                         neg = true;
                     } // throw InvalidExpressionException();
                     break;
                 case 'x':
-                    if (type == "num" || type=="close") inputOp(percent,value,type,"multiply");
+                    if (type == "num" || type=="close" || type == "square"|| type == "percent") inputOp(percent,value,type,"multiply");
                     else throw new InvalidExpressionException("MULTIPLY");
                     break;
                 case '/': // divide by 0 dihandle solve
-                    if (type == "num" || type=="close") inputOp(percent,value,type,"divide");
+                    if (type == "num" || type=="close" || type == "square"|| type == "percent") inputOp(percent,value,type,"divide");
                     else throw new InvalidExpressionException("DIVIDE");
                     break;
                 case '(':
