@@ -9,13 +9,15 @@ int main() {
     Data test(coba);
     try {
         test.parseInput();
-        test.debugData();
     } catch(BaseException* exc) {
         OperationFailedException* err = new OperationFailedException(exc);
         cout << err -> getMessage();
         return 0;
     }
-    
+        test.debugData();
+    // string wkwk;
+    // cin >> wkwk;
+    // cout << stod(wkwk) <<endl;
     cout << endl << test.solve();
     return 0;
 }
