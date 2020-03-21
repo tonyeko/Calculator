@@ -31,12 +31,14 @@ private:
 private slots:
     void number_pressed();
     void operation_pressed();
-    void memoryOperation_pressed();
+//    void memoryOperation_pressed();
     void update_display();
     void on_btnDecimal_released();
     void on_btnClear_released();
     void on_btnClearExpr_released();
     void on_btnSum_released();
     void on_btnAns_pressed();
+    void on_btnMC_released();
+    void on_btnMR_released();
 };
 #endif // CALCULATOR_HPP

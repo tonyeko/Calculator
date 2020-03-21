@@ -1,28 +1,29 @@
 #include "TerminalExpression.hpp"
-#include "SquareExpression.hpp"
-#include "AddExpression.hpp"
-#include "SubtractExpression.hpp"
-#include "PercentExpression.hpp"
-#include "SinExpression.hpp"
-#include "CosExpression.hpp"
-#include "TanExpression.hpp"
-#include "DecimalExpression.hpp"
+#include "Unary/SquareExpression.hpp"
+#include "Binary/AddExpression.hpp"
+#include "Binary/SubtractExpression.hpp"
+#include "Unary/PercentExpression.hpp"
+// #include "SinExpression.hpp"
+// #include "CosExpression.hpp"
+// #include "TanExpression.hpp"
+// #include "DecimalExpression.hpp"
 #include "Memory.hpp"
 #include <iostream>
 using namespace std;
 
 int main() {
     Expression<double>* e1 = new SquareExpression<double>(new TerminalExpression<double>(5));
-    e1 = new SinExpression<double>(new TerminalExpression<double>(5));
+    // e1 = new SinExpression<double>(new TerminalExpression<double>(5));
     Expression<double>* e2 = new AddExpression<double>(new TerminalExpression<double>(5.99123), new TerminalExpression<double>(6.0));
-    Expression<double>* e3 = new SubtractExpression<double>(new TerminalExpression<double>(5.9912313223), new TerminalExpression<double>(6.912834232));
+    Expression<double>* e3 = new SubtractExpression<double>(new TerminalExpression<double>(00005.90300000), new TerminalExpression<double>(6));
     Expression<double>* e4 = new PercentExpression<double>(new TerminalExpression<double>(5));
-    Expression<double>* e5 = new SinExpression<double>(new TerminalExpression<double>(2.45));
-    Expression<double>* e6 = new CosExpression<double>(new TerminalExpression<double>(2.45));
-    Expression<double>* e7 = new TanExpression<double>(new TerminalExpression<double>(2.45));
-    Expression<double>* e8 = new DecimalExpression<double, 4>(new TerminalExpression<double>(145), new TerminalExpression<double>(6313));
+    // Expression<double>* e5 = new SinExpression<double>(new TerminalExpression<double>(2.45));
+    // Expression<double>* e6 = new CosExpression<double>(new TerminalExpression<double>(2.45));
+    // Expression<double>* e7 = new TanExpression<double>(new TerminalExpression<double>(2.45));
+    // Expression<double>* e8 = new DecimalExpression<double, 4>(new TerminalExpression<double>(145), new TerminalExpression<double>(6313));
     Memory<double> m;
-    m.MC(e1); m.MC(e2); m.MC(e3); m.MC(e4); m.MC(e5); m.MC(e6);
+    m.MC(e1); m.MC(e2); m.MC(e3); m.MC(e4); 
+    // m.MC(e5); m.MC(e6);
     m.clear();
     m.MC(new TerminalExpression<double>(1004));
     Expression<double>* test = m.MR(); 
@@ -31,18 +32,18 @@ int main() {
     cout << e2->solve() << endl;
     cout << e3->solve() << endl;
     cout << e4->solve() << endl;
-    cout << e5->solve() << endl;
-    cout << e6->solve() << endl;
-    cout << e7->solve() << endl;
-    cout << e8->solve() << endl;
+    // cout << e5->solve() << endl;
+    // cout << e6->solve() << endl;
+    // cout << e7->solve() << endl;
+    // cout << e8->solve() << endl;
 
     delete e1;
     delete e2;
     delete e3;
     delete e4;
-    delete e5;
-    delete e6;
-    delete e7;
-    delete e8;
+    // delete e5;
+    // delete e6;
+    // delete e7;
+    // delete e8;
     return 0;
 }

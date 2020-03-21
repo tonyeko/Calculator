@@ -49,9 +49,6 @@ Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calcul
     // Other Operation
     connect(ui->btnOpen, SIGNAL(released()), this, SLOT(operation_pressed()));
     connect(ui->btnClose, SIGNAL(released()), this, SLOT(operation_pressed()));
-    // Memory Operation
-    connect(ui->btnMC, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
-    connect(ui->btnMR, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
 }
 
 Calculator::~Calculator()
@@ -189,27 +186,6 @@ void Calculator::operation_pressed()
     update_display();
 }
 
-void Calculator::memoryOperation_pressed()
-{
-    QPushButton* button = (QPushButton*) sender();
-    if (button->text() == "MC") {
-        calculate();
-        mem.MC(new TerminalExpression<double>(ans));
-    } else if (button->text() == "MR") {
-        QString labelValue;
-        try {
-            labelValue = QString::number(mem.MR()->solve(), 'g', 10);
-            setExpr(labelValue);
-            update_display();
-        } catch (BaseException* exc) {
-            OperationFailedException* err = new OperationFailedException(exc);
-            setExpr(QString::fromStdString(err->getMessage()));
-            update_display();
-            isErr = true;
-        }
-    }
-}
-
 void Calculator::on_btnDecimal_released()
 {
     setExpr(expr->solve() + ".");
@@ -248,5 +224,28 @@ void Calculator::on_btnAns_pressed()
         setExpr(expr->solve() + QString::number(ans, 'g', 10));
         update_display();
         ansPressed = true;
+    }
+}
+
+void Calculator::on_btnMC_released()
+{
+    calculate();
+    mem.MC(new TerminalExpression<double>(ans));
+}
+
+
+void Calculator::on_btnMR_released()
+{
+    QString labelValue;
+    try {
+        labelValue = QString::number(mem.MR()->solve(), 'g', 10);
+        setExpr(expr->solve()+labelValue);
+        update_display();
+        isAnswered = false;
+    } catch (BaseException* exc) {
+        OperationFailedException* err = new OperationFailedException(exc);
+        setExpr(QString::fromStdString(err->getMessage()));
+        update_display();
+        isErr = true;
     }
 }
