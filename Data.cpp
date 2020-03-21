@@ -108,15 +108,14 @@ void Data::parseInput() {
                     }
                     break;
                 case '^': //PENGGANTI KUADRAT
-                    if (type == "close" || type == "num") {
+                    if (type == "close" || type == "num" && !(*(it+1) >= 48 && *(it+1) <= 57)) {
                         vecData.push_back(make_pair(value,type));
                         value = 0;
                         type = "square";
                     }
-                    else if (*(it+1) >= 48 && *(it+1) <= 57) { 
-                            throw new InvalidExpressionException("SQUARE");
+                    else { 
+                        throw new InvalidExpressionException("SQUARE");
                     }
-                    else throw new InvalidExpressionException("SQUARE");
                     break;
                 case '~': //PENGGANTI SQRT
                     if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") { // untuk kasus setelah akar langsung angka??
