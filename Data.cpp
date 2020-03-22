@@ -26,8 +26,7 @@ void Data::inputOp(bool &percent, double &val, string &type, string input) {
 
 void Data::parseInput() {
     if (input.empty()) throw NullPointerException();    
-    else
-    {   
+    else {   
         bool sin = false, cos = false, tan = false;
         bool foundSqrt = false;
         bool neg = false;
