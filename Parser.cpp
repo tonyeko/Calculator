@@ -1,22 +1,20 @@
-// Data.cpp
-// Contributor : 13518135, 13518030
+// Parser.cpp
+// Contributor : 13518135, 13518030, 13518105
 /*  Implementasi Data.hpp
 */
 
-#include "Data.hpp"
+#include "Parser.hpp"
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <stack>
 using namespace std;
 
-Data::Data(string inp) {
+Parser::Parser(string inp) {
     input = inp;
-    string::iterator it;
-    cout << "INPUT: " << input << endl;
 }
 
-void Data::inputOp(bool &percent, double &val, string &type, string input) {
+void Parser::inputOp(bool &percent, double &val, string &type, string input) {
     percent = false;
     vecData.push_back(make_pair(val,type)); // push angka
     val = 0;
@@ -24,20 +22,15 @@ void Data::inputOp(bool &percent, double &val, string &type, string input) {
     vecData.push_back(make_pair(0,type)); //push operator
 }
 
-void Data::parseInput() {
+void Parser::parseInput() {
     if (input.empty()) throw NullPointerException();    
     else
     {   
-        bool sin = false, cos = false, tan = false;
-        bool foundSqrt = false;
         bool neg = false;
         bool percent = false;
         double value = 0;
         double dec = 0.0;
         double decCount = 10;
-        //untuk unary 
-        double num;
-        bool numneg;
         string type = "null";
         string::iterator it;
         for (it=input.begin(); it!=input.end(); it++) {
@@ -189,14 +182,14 @@ void Data::parseInput() {
         cout <<  "Parsed Successfully\n";
     }
 }
-void Data::debugData() {
+void Parser::debugData() {
     cout.precision(15);
     for (int i=0; i<vecData.size(); i++) {
         cout << vecData[i].first << "|" << vecData[i].second << " ";
     }
 }
 
-double Data::unaryOperationHandler(double val, string op) {
+double Parser::unaryOperationHandler(double val, string op) {
     Expression<double>* e;
     if (op == "-") {
         e = new NegativeExpression<double>(new TerminalExpression<double>(val));
@@ -216,7 +209,7 @@ double Data::unaryOperationHandler(double val, string op) {
     return e->solve();
 }
 
-double Data::binaryOperationHandler(double valfirst, double valsec, string op) {
+double Parser::binaryOperationHandler(double valfirst, double valsec, string op) {
     Expression<double>* e;
     if (op == "plus") {
         e = new AddExpression<double>(new TerminalExpression<double>(valfirst), new TerminalExpression<double>(valsec));
@@ -230,7 +223,7 @@ double Data::binaryOperationHandler(double valfirst, double valsec, string op) {
     return e->solve();
 }
 
-double Data::solve() {
+double Parser::solve() {
     stack<double> number; //stack to store values
     stack<string> operate; //stack to store operators
     for (int i=0; i<vecData.size(); i++) {
