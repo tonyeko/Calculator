@@ -31,13 +31,13 @@
 #include "Expression/Binary/DivisionExpression.hpp"
 using namespace std;
 
-class Data {
+class Parser {
 protected: 
     // First: value, Second:type
     vector<pair<double,string>> vecData; //isi:token
     string input; // to parse
 public:
-    Data(string inp);
+    Parser(string inp);
     void parseInput();
     double unaryOperationHandler(double val, string op);
     double binaryOperationHandler(double valfirst, double valsec, string op);
