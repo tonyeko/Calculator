@@ -23,7 +23,7 @@ void Parser::inputOp(bool &percent, double &val, string &type, string input) {
 }
 
 void Parser::parseInput() {
-    if (input.empty()) throw NullPointerException();    
+    if (input.empty()) throw new NullPointerException();    
     else
     {   
         bool neg = false;
