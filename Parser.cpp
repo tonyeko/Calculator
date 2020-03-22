@@ -50,7 +50,7 @@ void Parser::parseInput() {
                     else {
                         type = "subtract";
                         neg = true;
-                    } // throw InvalidExpressionException();
+                    }
                     break;
                 case 'x':
                     if (type == "num" || type=="close" || type == "square"|| type == "percent") inputOp(percent,value,type,"multiply");
@@ -94,7 +94,7 @@ void Parser::parseInput() {
                         it++;
                     }
                     it--;
-                    if (decCount == 0.1 || *it+1 == '.') throw InvalidExpressionException("DECIMAL");
+                    if (decCount == 0.1 || *it+1 == '.') throw new InvalidExpressionException("DECIMAL");
                     else {
                         type = "num";
                         value += dec;
@@ -119,7 +119,7 @@ void Parser::parseInput() {
                         type = "sqrt";
                     }
                     else {
-                        throw InvalidExpressionException("SQRT");
+                        throw new InvalidExpressionException("SQRT");
                     }
                     break;
                 case 'S':
@@ -128,7 +128,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"sin"));
                     }
                     else {
-                        throw InvalidExpressionException("SIN");
+                        throw new InvalidExpressionException("SIN");
                     }
                     break;
                 case 'C':
@@ -137,7 +137,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"cos"));
                     }
                     else {
-                        throw InvalidExpressionException("COS");
+                        throw new InvalidExpressionException("COS");
                     }
                     break;
                 case 'T':
@@ -146,7 +146,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"tan"));
                     }
                     else {
-                        throw InvalidExpressionException("TAN");
+                        throw new InvalidExpressionException("TAN");
                     }
                     break;
                 // *Numbers
