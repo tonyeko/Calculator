@@ -34,7 +34,6 @@ void Parser::parseInput() {
         string type = "null";
         string::iterator it;
         for (it=input.begin(); it!=input.end(); it++) {
-            cout << "Type skrg: " << type << endl;
             switch(*it) {
                 // * Operators
                 case '+':
@@ -51,7 +50,7 @@ void Parser::parseInput() {
                     else {
                         type = "subtract";
                         neg = true;
-                    } // throw InvalidExpressionException();
+                    }
                     break;
                 case 'x':
                     if (type == "num" || type=="close" || type == "square"|| type == "percent") inputOp(percent,value,type,"multiply");
@@ -95,7 +94,7 @@ void Parser::parseInput() {
                         it++;
                     }
                     it--;
-                    if (decCount == 0.1 || *it+1 == '.') throw InvalidExpressionException("DECIMAL");
+                    if (decCount == 0.1 || *it+1 == '.') throw new InvalidExpressionException("DECIMAL");
                     else {
                         type = "num";
                         value += dec;
@@ -120,7 +119,7 @@ void Parser::parseInput() {
                         type = "sqrt";
                     }
                     else {
-                        throw InvalidExpressionException("SQRT");
+                        throw new InvalidExpressionException("SQRT");
                     }
                     break;
                 case 'S':
@@ -129,7 +128,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"sin"));
                     }
                     else {
-                        throw InvalidExpressionException("SIN");
+                        throw new InvalidExpressionException("SIN");
                     }
                     break;
                 case 'C':
@@ -138,7 +137,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"cos"));
                     }
                     else {
-                        throw InvalidExpressionException("COS");
+                        throw new InvalidExpressionException("COS");
                     }
                     break;
                 case 'T':
@@ -147,7 +146,7 @@ void Parser::parseInput() {
                         vecData.push_back(make_pair(0,"tan"));
                     }
                     else {
-                        throw InvalidExpressionException("TAN");
+                        throw new InvalidExpressionException("TAN");
                     }
                     break;
                 // *Numbers
@@ -166,7 +165,6 @@ void Parser::parseInput() {
                     if (percent) throw new InvalidExpressionException("PERCENT");
                     else if (type == "close") throw new InvalidExpressionException("CLOSE PAR");
                     type = "num";
-                    // cout << "Value : " << value << endl;
                     if (neg) {
                         value = unaryOperationHandler(((double) (*it) - 48), "-");
                         neg = false;
@@ -175,14 +173,11 @@ void Parser::parseInput() {
                     } else { 
                         value = value*10 + ((double) (*it) - 48); 
                     }
-                    // cout << "Value New : " << value << endl;
                     break;
                 
             }
-            cout << *it << endl;
         }
         if (type == "num" || type=="close" || type=="square" || type=="percent") vecData.push_back(make_pair(value,type));
-        // else if (type == "close") {}
         else throw new InvalidExpressionException("END");
         cout <<  "Parsed Successfully\n";
     }
