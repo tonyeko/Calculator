@@ -18,20 +18,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 win32:RC_ICONS += Calculator.ico
 
 SOURCES += \
-    Data.cpp \
+    Parser.cpp \
     main.cpp \
     calculator.cpp
 
 HEADERS += \
-    Data.hpp \
     Exception/BaseException.hpp \
-    Exception/DigitLimitException.hpp \
     Exception/DivideByZeroException.hpp \
     Exception/EmptyMemoryException.hpp \
     Exception/InvalidExpressionException.hpp \
     Exception/NegativeSqrtException.hpp \
     Exception/OperationFailedException.hpp \
     Expression/AddExpression.hpp \
+    Expression/Binary/AddExpression.hpp \
+    Expression/Binary/BinaryExpression.hpp \
+    Expression/Binary/DivisionExpression.hpp \
+    Expression/Binary/MultiplicationExpression.hpp \
+    Expression/Binary/SubtractExpression.hpp \
     Expression/BinaryExpression.hpp \
     Expression/CosExpression.hpp \
     Expression/DivisionExpression.hpp \
@@ -47,7 +50,17 @@ HEADERS += \
     Expression/TanExpression.hpp \
     Expression/TerminalExpression.hpp \
     Expression/TrigonometryExpression.hpp \
+    Expression/Unary/NegativeExpression.hpp \
+    Expression/Unary/PercentExpression.hpp \
+    Expression/Unary/SqrtExpression.hpp \
+    Expression/Unary/SquareExpression.hpp \
+    Expression/Unary/Trigonometry/CosExpression.hpp \
+    Expression/Unary/Trigonometry/SinExpression.hpp \
+    Expression/Unary/Trigonometry/TanExpression.hpp \
+    Expression/Unary/Trigonometry/TrigonometryExpression.hpp \
+    Expression/Unary/UnaryExpression.hpp \
     Expression/UnaryExpression.hpp \
+    Parser.hpp \
     calculator.hpp
 
 FORMS += \

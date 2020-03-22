@@ -22,6 +22,7 @@ public:
     void clearErr();
     void clearDisplayedAns();
     void calculate();
+    void errorHandler(BaseException*);
 
 private:
     Ui::Calculator *ui;

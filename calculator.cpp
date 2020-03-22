@@ -1,6 +1,6 @@
 #include "calculator.hpp"
 #include "ui_calculator.h"
-#include "Data.hpp"
+#include "Parser.hpp"
 #include "Expression/TerminalExpression.hpp"
 #include "Exception/OperationFailedException.hpp"
 #include "Exception/InvalidExpressionException.hpp"
@@ -149,8 +149,8 @@ void Calculator::calculate()
         val.replace("²", "^");
         val.replace("÷", "/");
 
-        // STRUKTUR NYA MESTI DIBENERIN LAGI
-        Data x(val.toStdString());
+        // PASS TO PARSER AND SOLVE EXPRESSION
+        Parser x(val.toStdString());
         x.parseInput();
         if (x.solve() == numeric_limits<double>::infinity()) {
             ans = 0; isAnswered = false;
@@ -161,11 +161,16 @@ void Calculator::calculate()
             update_display();
         }
     } catch (BaseException* exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
+        errorHandler(exc);
     }
+}
+
+void Calculator::errorHandler(BaseException * exc)
+{
+    OperationFailedException* err = new OperationFailedException(exc);
+    setExpr(QString::fromStdString(err->getMessage()));
+    update_display();
+    isErr = true;
 }
 
 void Calculator::number_pressed()
@@ -253,9 +258,6 @@ void Calculator::on_btnMR_released()
         update_display();
         isAnswered = false;
     } catch (BaseException* exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
+        errorHandler(exc);
     }
 }
