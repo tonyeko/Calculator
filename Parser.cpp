@@ -24,14 +24,8 @@ void Parser::inputOp(bool &percent, double &val, string &type, string input) {
 
 void Parser::parseInput() {
     if (input.empty()) throw NullPointerException();    
-<<<<<<< HEAD:Data.cpp
-    else {   
-        bool sin = false, cos = false, tan = false;
-        bool foundSqrt = false;
-=======
     else
     {   
->>>>>>> 843e4352a4a3d6d5fed2636e1e5b1032e510c6d2:Parser.cpp
         bool neg = false;
         bool percent = false;
         double value = 0;
@@ -40,7 +34,6 @@ void Parser::parseInput() {
         string type = "null";
         string::iterator it;
         for (it=input.begin(); it!=input.end(); it++) {
-            cout << "Type skrg: " << type << endl;
             switch(*it) {
                 // * Operators
                 case '+':
@@ -172,7 +165,6 @@ void Parser::parseInput() {
                     if (percent) throw new InvalidExpressionException("PERCENT");
                     else if (type == "close") throw new InvalidExpressionException("CLOSE PAR");
                     type = "num";
-                    // cout << "Value : " << value << endl;
                     if (neg) {
                         value = unaryOperationHandler(((double) (*it) - 48), "-");
                         neg = false;
@@ -181,14 +173,11 @@ void Parser::parseInput() {
                     } else { 
                         value = value*10 + ((double) (*it) - 48); 
                     }
-                    // cout << "Value New : " << value << endl;
                     break;
                 
             }
-            cout << *it << endl;
         }
         if (type == "num" || type=="close" || type=="square" || type=="percent") vecData.push_back(make_pair(value,type));
-        // else if (type == "close") {}
         else throw new InvalidExpressionException("END");
         cout <<  "Parsed Successfully\n";
     }
