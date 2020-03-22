@@ -45,6 +45,9 @@ void Parser::parseInput() {
                 case '-':
                     if (type == "subtract") throw new DoubleNegationException();
                     else if (type == "num" || type=="close" || type=="percent" || type=="square") inputOp(percent,value,type,"subtract");
+                    else if (type == "sqrt") {
+                        throw new NegativeSqrtException();
+                    }
                     else {
                         type = "subtract";
                         neg = true;
@@ -113,6 +116,8 @@ void Parser::parseInput() {
                 case '~': //PENGGANTI SQRT
                     if (type == "open" || type == "plus" || type == "subtract" || type == "multiply" || type == "divide" || type == "null") { // untuk kasus setelah akar langsung angka??
                         vecData.push_back(make_pair(0,"sqrt"));
+                        value = 0;
+                        type = "sqrt";
                     }
                     else {
                         throw InvalidExpressionException("SQRT");
@@ -260,13 +265,18 @@ double Parser::solve() {
             }
             operate.pop();
             if ((operate.size() > 0) && (operate.top() == "sqrt" || operate.top() == "sin" || operate.top() == "cos" || operate.top() == "tan")) {
-                string operater = operate.top();
-                operate.pop();
-                double val = number.top();
-                number.pop();
-                double res = unaryOperationHandler(val, operater);
-                number.push(res);
+                if (operate.top() == "sqrt" && number.top() < 0) {
+                    throw new NegativeSqrtException();
                 }
+                else {
+                    string operater = operate.top();
+                    operate.pop();
+                    double val = number.top();
+                    number.pop();
+                    double res = unaryOperationHandler(val, operater);
+                    number.push(res);
+                }
+            }
         } else if ((vecData[i].second == "plus") || (vecData[i].second == "subtract")) {
             while ((operate.size() > 0) && (operate.top() != "open")) {
                 string operater = operate.top();
