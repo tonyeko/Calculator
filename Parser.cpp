@@ -24,14 +24,8 @@ void Parser::inputOp(bool &percent, double &val, string &type, string input) {
 
 void Parser::parseInput() {
     if (input.empty()) throw NullPointerException();    
-<<<<<<< HEAD:Data.cpp
-    else {   
-        bool sin = false, cos = false, tan = false;
-        bool foundSqrt = false;
-=======
     else
     {   
->>>>>>> 843e4352a4a3d6d5fed2636e1e5b1032e510c6d2:Parser.cpp
         bool neg = false;
         bool percent = false;
         double value = 0;
