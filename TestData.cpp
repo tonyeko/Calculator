@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
-#include "Data.hpp"
+#include "Parser.hpp"
 #include "Exception/OperationFailedException.hpp"
 using namespace std;
 
 int main() {
     string coba;
     cin >> coba;
-    Data test(coba);
+    Parser test(coba);
     try {
         test.parseInput();
     } catch(BaseException* exc) {

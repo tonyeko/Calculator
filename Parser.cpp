@@ -68,7 +68,7 @@ void Parser::parseInput() {
                     break;
                 case ')':
                     if (type == "open") throw new EmptyParenthesesException(); // kasus open langsung close
-                    else if (type == "close" || type == "num") { // kasus jika tidak ada operator stlh num / close
+                    else if (type == "close" || type == "num" || type == "percent" || type == "square") { // kasus jika tidak ada operator stlh num / close
                         percent = false;
                         vecData.push_back(make_pair(value,type));
                         value = 0;
