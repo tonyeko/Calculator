@@ -1,11 +1,11 @@
-// Data.hpp
+// Parser.hpp
 // Contributor : 13518135
 /*  Includes string parser
     Stores temp data
 */
 
-#ifndef DATA_HPP
-#define DATA_HPP
+#ifndef PARSER_HPP
+#define PARSER_HPP
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -26,18 +26,17 @@
 #include "Expression/Unary/Trigonometry/TanExpression.hpp"
 #include "Expression/Binary/AddExpression.hpp"
 #include "Expression/Binary/SubtractExpression.hpp"
-#include "Expression/Binary/DecimalExpression.hpp"
 #include "Expression/Binary/MultiplicationExpression.hpp"
 #include "Expression/Binary/DivisionExpression.hpp"
 using namespace std;
 
-class Data {
+class Parser {
 protected: 
     // First: value, Second:type
     vector<pair<double,string>> vecData; //isi:token
     string input; // to parse
 public:
-    Data(string inp);
+    Parser(string inp);
     void parseInput();
     double unaryOperationHandler(double val, string op);
     double binaryOperationHandler(double valfirst, double valsec, string op);
@@ -47,4 +46,4 @@ public:
 };
 
 
-#endif // Data.hpp
+#endif // Parser.hpp

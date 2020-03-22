@@ -1,6 +1,6 @@
 #include "calculator.hpp"
 #include "ui_calculator.h"
-#include "Data.hpp"
+#include "Parser.hpp"
 #include "Expression/TerminalExpression.hpp"
 #include "Exception/OperationFailedException.hpp"
 #include "Exception/InvalidExpressionException.hpp"
@@ -49,9 +49,6 @@ Calculator::Calculator(QWidget *parent) : QMainWindow(parent), ui(new Ui::Calcul
     // Other Operation
     connect(ui->btnOpen, SIGNAL(released()), this, SLOT(operation_pressed()));
     connect(ui->btnClose, SIGNAL(released()), this, SLOT(operation_pressed()));
-    // Memory Operation
-    connect(ui->btnMC, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
-    connect(ui->btnMR, SIGNAL(released()), this, SLOT(memoryOperation_pressed()));
 }
 
 Calculator::~Calculator()
@@ -68,6 +65,8 @@ void Calculator::setExpr(QString qStr)
 
 void Calculator::exprCheck()
 {
+    int countOpenPar = 0;
+    int countClosePar = 0;
     QString str = expr->solve();
     if (isErr) throw new InvalidExpressionException("ERR EXPR");
     if (str.length() == 0) throw new InvalidExpressionException("EMPTY");
@@ -107,7 +106,15 @@ void Calculator::exprCheck()
                 }
             }
         }
+        if (str[i] == "(") {
+            countOpenPar++;
+        }
+        if (str[i] == ")") {
+            countClosePar++;
+        }
     }
+    if (countOpenPar > countClosePar) throw new InvalidExpressionException("CLOSE PAR");
+    else if (countOpenPar < countClosePar) throw new InvalidExpressionException("OPEN PAR");
 }
 
 void Calculator::clearExpr()
@@ -142,25 +149,28 @@ void Calculator::calculate()
         val.replace("²", "^");
         val.replace("÷", "/");
 
-        // STRUKTUR NYA MESTI DIBENERIN LAGI
-        Data x(val.toStdString());
+        // PASS TO PARSER AND SOLVE EXPRESSION
+        Parser x(val.toStdString());
         x.parseInput();
         if (x.solve() == numeric_limits<double>::infinity()) {
+            ans = 0; isAnswered = false;
             throw new DivideByZeroException();
         } else {
             ans = x.solve(); isAnswered = true;
             setExpr(QString::number(ans, 'g', 10));
             update_display();
         }
-
-
-
     } catch (BaseException* exc) {
-        OperationFailedException* err = new OperationFailedException(exc);
-        setExpr(QString::fromStdString(err->getMessage()));
-        update_display();
-        isErr = true;
+        errorHandler(exc);
     }
+}
+
+void Calculator::errorHandler(BaseException * exc)
+{
+    OperationFailedException* err = new OperationFailedException(exc);
+    setExpr(QString::fromStdString(err->getMessage()));
+    update_display();
+    isErr = true;
 }
 
 void Calculator::number_pressed()
@@ -187,27 +197,6 @@ void Calculator::operation_pressed()
         }
     }
     update_display();
-}
-
-void Calculator::memoryOperation_pressed()
-{
-    QPushButton* button = (QPushButton*) sender();
-    if (button->text() == "MC") {
-        calculate();
-        mem.MC(new TerminalExpression<double>(ans));
-    } else if (button->text() == "MR") {
-        QString labelValue;
-        try {
-            labelValue = QString::number(mem.MR()->solve(), 'g', 10);
-            setExpr(labelValue);
-            update_display();
-        } catch (BaseException* exc) {
-            OperationFailedException* err = new OperationFailedException(exc);
-            setExpr(QString::fromStdString(err->getMessage()));
-            update_display();
-            isErr = true;
-        }
-    }
 }
 
 void Calculator::on_btnDecimal_released()
@@ -248,5 +237,27 @@ void Calculator::on_btnAns_pressed()
         setExpr(expr->solve() + QString::number(ans, 'g', 10));
         update_display();
         ansPressed = true;
+    }
+}
+
+void Calculator::on_btnMC_released()
+{
+    calculate();
+    if (!isErr) {
+        mem.MC(new TerminalExpression<double>(ans));
+    }
+}
+
+
+void Calculator::on_btnMR_released()
+{
+    QString labelValue;
+    try {
+        labelValue = QString::number(mem.MR()->solve(), 'g', 10);
+        setExpr(labelValue);
+        update_display();
+        isAnswered = false;
+    } catch (BaseException* exc) {
+        errorHandler(exc);
     }
 }
